@@ -42,7 +42,7 @@ class FieldSpecifications extends Migration
         $this->forge->addKey('spec_id');
         // $this->forge->addForeignKey('field_id', 'fields', 'id', 'CASCADE', 'CASCADE');
         // $this->forge->addForeignKey('spec_id', 'spesifications', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->createTable('field_spesifications');
+        $this->forge->createTable('field_specifications');
     }
 
     public function down()

@@ -34,8 +34,8 @@
 
         <!-- Begin Page Content -->
         <div class="render-content">
-          <?= $this->renderSection('banner'); ?>
           <div class="container-fluid">
+            <?= $this->renderSection('banner'); ?>
             <?= $this->renderSection('content'); ?>
           </div>
         </div>

@@ -37,7 +37,7 @@ class Venue extends Migration
                 'constraint' => 11,
                 'unsigned' => true,
             ],
-            'star' => [
+            'rating' => [
                 'type' => 'float',
                 'null' => true
             ],

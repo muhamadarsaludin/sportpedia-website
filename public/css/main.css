@@ -139,6 +139,16 @@ footer .btn-sosmed:hover {
   color: #224abe;
 }
 
+.w-100 {
+  width: 100%;
+}
+
+.banner-img {
+  height: 350px !important;
+  object-fit: cover;
+  background-position: center;
+}
+
 .bg-login {
   background: url("../img/bg_auth.png");
   background-size: cover;

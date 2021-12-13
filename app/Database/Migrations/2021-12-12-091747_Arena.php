@@ -33,11 +33,7 @@ class Arena extends Migration
                 'type' => 'varchar',
                 'constraint' => 128,
             ],
-            'level_id' => [
-                'type' => 'int',
-                'unsigned' => true,
-            ],
-            'star' => [
+            'rating' => [
                 'type' => 'float',
                 'null' => true
             ],

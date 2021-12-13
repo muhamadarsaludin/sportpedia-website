@@ -32,7 +32,7 @@ class Fields extends Migration
                 'type' => 'varchar',
                 'constraint' => 128,
             ],
-            'star' => [
+            'rating' => [
                 'type' => 'float',
                 'null' => true
             ],
