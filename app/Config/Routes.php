@@ -36,6 +36,9 @@ $routes->get('/', 'Main::index');
 $routes->get('/login', 'Auth::login');
 $routes->get('/register', 'Auth::register');
 
+
+$routes->delete('admin/sports/(:num)', 'Admin\Sports::delete/$1');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

@@ -46,7 +46,7 @@
   </div>
 
   <div class="row mb-4">
-    <div class="col-6 col-lg-3">
+    <div class="col-12 col-lg-3">
       <a href="/arena/slug" class="clear-style">
         <div class="card shadow text-gray-600">
           <img class="card-img-top img-card-arena" src="/img/venue/arena/main-images/arena1.jpg">

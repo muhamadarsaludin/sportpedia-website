@@ -3,7 +3,7 @@
   <!-- Sidebar - Brand -->
   <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
     <div class="sidebar-brand-icon">
-      <img src="/img/logos/logo-sportpedia.png" alt="" class="w-70 img-responsive">
+      <img src="/img/logos/logo-sportpedia.png" alt="" class="img-responsive" width="70%">
     </div>
 
   </a>
@@ -29,7 +29,7 @@
   <li class="nav-item">
     <a class="nav-link" href="<?= base_url('admin/sports'); ?>">
       <i class="fas fa-fw fa-futbol"></i>
-      <span>Data Olahraga</span></a>
+      <span>Olahraga</span></a>
   </li>
   <!-- Nav Item Fasilitas -->
   <li class="nav-item">
