@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <link rel="icon" href="<?= base_url('img/logos/logo-gram-sportpedia.svg'); ?>" type="image/x-icon">
-  <title><?= $title ?></title>
+  <title><?= $title; ?></title>
   <?= $this->include('templates/_style.php'); ?>
 </head>
 
@@ -19,7 +19,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <?= $this->include('templates/sidebar'); ?>
+    <?= $this->include('templates/sidebar.php'); ?>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -34,8 +34,8 @@
 
         <!-- Begin Page Content -->
         <div class="render-content">
-          <?= $this->renderSection('banner'); ?>
           <div class="container-fluid">
+            <?= $this->renderSection('banner'); ?>
             <?= $this->renderSection('content'); ?>
           </div>
         </div>
