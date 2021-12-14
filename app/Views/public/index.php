@@ -6,7 +6,7 @@
   <div class="banner-container row">
     <?php foreach ($banners as $banner) : ?>
       <div class="col-12">
-        <img class="banner-img w-100 rounded" src="/img/banner/<?= $banner['image']; ?>">
+        <img class="banner-img w-100 rounded" src="/img/banners/<?= $banner['image']; ?>">
       </div>
     <?php endforeach; ?>
   </div>
