@@ -44,31 +44,30 @@
               <th>Status</th>
               <th>Aksi</th>
             </tr>
-            <tbody>
-              <?php $i = 1; ?>
-              <?php foreach ($banners as $banner) : ?>
-                <tr>
-                  <td><?= $i++; ?></td>
-                  <td><img src="/img/banners/<?= $banner['image']; ?>" class="w-100" alt=""></td>
-                  <td><?= $banner['title']; ?></td>
-                  <td><a target="blank" class="btn btn-primary <?= ($banner['link'] ? '' : 'disabled'); ?>" href="<?= $banner['link']; ?>">Kunjugi Halaman</a></td>
-                  <td><?= $banner['active'] == 1 ? 'Aktif' : 'Non Aktif'; ?></td>
-
-                  <td class="text-center">
-                    <a href="/admin/banners/detail/<?= $banner['id']; ?>" class="btn btn-info btn-sm"><i class="d-lg-none fa fa-pencil-alt"></i><span class="d-none d-lg-inline">Detail</span></a>
-                    <a href="/admin/banners/edit/<?= $banner['id']; ?>" class="btn btn-warning btn-sm"><i class="d-lg-none fa fa-pencil-alt"></i><span class="d-none d-lg-inline">Edit</span></a>
-                    <form action="/admin/banners/<?= $banner['id']; ?>" method="POST" class="d-inline form-delete">
-                      <?= csrf_field(); ?>
-                      <input type="hidden" name="_method" value="DELETE">
-                      <button type="submit" class="btn btn-danger btn-sm btn-delete"><span class="d-lg-none fa fa-trash"></span><span class="d-none d-lg-inline">Hapus</span></span></button>
-                    </form>
-                  </td>
-                </tr>
-              <?php endforeach; ?>
-            </tbody>
           </tfoot>
           <tbody>
+            <?php $i = 1; ?>
+            <?php foreach ($banners as $banner) : ?>
+              <tr>
+                <td><?= $i++; ?></td>
+                <td><img src="/img/banners/<?= $banner['image']; ?>" class="w-100" alt=""></td>
+                <td><?= $banner['title']; ?></td>
+                <td><a target="blank" class="btn btn-primary <?= ($banner['link'] ? '' : 'disabled'); ?>" href="<?= $banner['link']; ?>">Kunjugi Halaman</a></td>
+                <td><?= $banner['active'] == 1 ? 'Aktif' : 'Non Aktif'; ?></td>
+
+                <td class="text-center">
+                  <a href="/admin/banners/detail/<?= $banner['id']; ?>" class="btn btn-info btn-sm"><i class="d-lg-none fa fa-pencil-alt"></i><span class="d-none d-lg-inline">Detail</span></a>
+                  <a href="/admin/banners/edit/<?= $banner['id']; ?>" class="btn btn-warning btn-sm"><i class="d-lg-none fa fa-pencil-alt"></i><span class="d-none d-lg-inline">Edit</span></a>
+                  <form action="/admin/banners/<?= $banner['id']; ?>" method="POST" class="d-inline form-delete">
+                    <?= csrf_field(); ?>
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-danger btn-sm btn-delete"><span class="d-lg-none fa fa-trash"></span><span class="d-none d-lg-inline">Hapus</span></span></button>
+                  </form>
+                </td>
+              </tr>
+            <?php endforeach; ?>
           </tbody>
+
         </table>
       </div>
     </div>

@@ -46,23 +46,11 @@
           </div>
         </div>
         <div class="text-right" width="100%">
-          <a href="/admin/bannerss" class="btn btn-secondary btn-sm">Kembali</a>
+          <a href="/admin/banners" class="btn btn-secondary btn-sm">Kembali</a>
           <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
         </div>
       </form>
     </div>
   </div>
-
-
-
-
 </section>
-<?= $this->endSection(); ?>
-
-<?= $this->section('script'); ?>
-<script>
-  $(document).ready(function() {
-    $('#dataUsers').DataTable();
-  });
-</script>
 <?= $this->endSection(); ?>

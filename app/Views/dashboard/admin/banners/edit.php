@@ -33,7 +33,7 @@
         <div class="form-group row">
           <label for="title" class="col-sm-2 col-form-label">Judul</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control form-control-user <?= ($validation->hasError('title') ? 'is-invalid' : ''); ?>" id="title" name="title" value="<?= $validation->hasError('title') ? old('title') : $banner['title']; ?>">
+            <input type="text" class="form-control form-control-user <?= ($validation->hasError('title') ? 'is-invalid' : ''); ?>" id="title" name="title" value="<?= old('title') ? old('title') : $banner['title']; ?>">
             <div class="invalid-feedback">
               <?= $validation->getError('title'); ?>
             </div>
@@ -42,7 +42,7 @@
         <div class="form-group row">
           <label for="link" class="col-sm-2 col-form-label">Link</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control form-control-user <?= ($validation->hasError('link') ? 'is-invalid' : ''); ?>" id="link" name="link" value="<?= $validation->hasError('link') ? old('link') : $banner['link']; ?>">
+            <input type="text" class="form-control form-control-user <?= ($validation->hasError('link') ? 'is-invalid' : ''); ?>" id="link" name="link" value="<?= old('link') ? old('link') : $banner['link']; ?>">
             <div class="invalid-feedback">
               <?= $validation->getError('link'); ?>
             </div>

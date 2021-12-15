@@ -39,6 +39,7 @@ $routes->get('/register', 'Auth::register');
 
 $routes->delete('admin/sports/(:num)', 'Admin\Sports::delete/$1');
 $routes->delete('admin/banners/(:num)', 'Admin\Banners::delete/$1');
+$routes->delete('admin/facilities/(:num)', 'Admin\Facilities::delete/$1');
 
 /*
  * --------------------------------------------------------------------

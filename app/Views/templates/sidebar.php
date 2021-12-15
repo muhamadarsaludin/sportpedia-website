@@ -13,7 +13,7 @@
 
   <!-- Nav Item - Dashboard -->
   <li class="nav-item">
-    <a class="nav-link" href="index.html">
+    <a class="nav-link" href="/dashboard">
       <i class="fas fa-fw fa-tachometer-alt"></i>
       <span>Dashboard</span></a>
   </li>
@@ -33,12 +33,12 @@
   </li>
   <!-- Nav Item Fasilitas -->
   <li class="nav-item">
-    <a class="nav-link" href="<?= base_url('admin/facility'); ?>">
+    <a class="nav-link" href="<?= base_url('admin/facilities'); ?>">
       <i class="fas fa-fw fa-hand-holding-heart"></i>
       <span>Fasilitas</span></a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="<?= base_url('admin/banner'); ?>">
+    <a class="nav-link" href="<?= base_url('admin/banners'); ?>">
       <i class="fas fa-fw fa-bullhorn"></i>
       <span>Banner Informasi</span></a>
   </li>

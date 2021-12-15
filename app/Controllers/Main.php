@@ -39,7 +39,7 @@ class Main extends BaseController
       'banners' => $this->bannersModel->getWhere(['venue_id' => null, 'active' => 1])->getResultArray(),
       'sports' => $this->sportsModel->getWhere(['active' => 1])->getResultArray(),
     ];
-    // dd($data);
+    // dd(my_info());
     return view('public/index', $data);
   }
 }
