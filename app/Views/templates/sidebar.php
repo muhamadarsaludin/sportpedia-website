@@ -38,6 +38,11 @@
       <span>Fasilitas</span></a>
   </li>
   <li class="nav-item">
+    <a class="nav-link" href="<?= base_url('admin/specifications'); ?>">
+      <i class="fas fa-fw fa-clipboard-list"></i>
+      <span>Spesifikasi</span></a>
+  </li>
+  <li class="nav-item">
     <a class="nav-link" href="<?= base_url('admin/banners'); ?>">
       <i class="fas fa-fw fa-bullhorn"></i>
       <span>Banner Informasi</span></a>

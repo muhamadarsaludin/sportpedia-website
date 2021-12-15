@@ -47,11 +47,11 @@ class Specifications extends Migration
             ],
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->createTable('spesifications');
+        $this->forge->createTable('specifications');
     }
 
     public function down()
     {
-        $this->forge->dropTable('spesifications', false, true);
+        $this->forge->dropTable('specifications', false, true);
     }
 }

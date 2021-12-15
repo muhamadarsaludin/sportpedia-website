@@ -15,7 +15,7 @@
         <div class="form-group row">
           <label for="facility_name" class="col-sm-2 col-form-label">Nama Fasilitas</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control form-control-user <?= ($validation->hasError('facility_name') ? 'is-invalid' : ''); ?>" id="facility_name" name="facility_name" placeholder="Nama Facilitas">
+            <input type="text" class="form-control form-control-user <?= ($validation->hasError('facility_name') ? 'is-invalid' : ''); ?>" id="facility_name" name="facility_name" placeholder="Nama Fasilitas">
             <div class="invalid-feedback">
               <?= $validation->getError('facility_name'); ?>
             </div>
