@@ -42,6 +42,9 @@ $routes->delete('admin/banners/(:num)', 'Admin\Banners::delete/$1');
 $routes->delete('admin/facilities/(:num)', 'Admin\Facilities::delete/$1');
 $routes->delete('admin/specifications/(:num)', 'Admin\Specifications::delete/$1');
 
+
+// ADMIN/USER
+$routes->delete('admin/users/groups/(:num)', 'Admin\Users\Groups::delete/$1');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

@@ -57,7 +57,7 @@
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Data Master User</h6>
         <a class="collapse-item" href="<?= base_url('admin/users/main'); ?>">Daftar User</a>
-        <a class="collapse-item" href="<?= base_url('admin/users/roles'); ?>">Daftar User Role</a>
+        <a class="collapse-item" href="<?= base_url('admin/users/groups'); ?>">Daftar Group User</a>
       </div>
     </div>
   </li>
