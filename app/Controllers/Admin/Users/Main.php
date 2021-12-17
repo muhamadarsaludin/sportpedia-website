@@ -3,7 +3,7 @@
 namespace App\Controllers\Admin\Users;
 
 use App\Controllers\BaseController;
-use App\Models\RolesModel;
+use App\Models\GroupsModel;
 use App\Models\UsersModel;
 use App\Models\GroupsUsersModel;
 
@@ -14,7 +14,7 @@ class Main extends BaseController
 
   public function __construct()
   {
-    $this->rolesModel = new RolesModel();
+    $this->groupsModel = new GroupsModel();
     $this->usersModel = new UsersModel();
     $this->groupsUsersModel = new GroupsUsersModel();
   }
@@ -25,7 +25,7 @@ class Main extends BaseController
     $data = [
       'title'  => 'Daftar User | Sportpedia',
       'active' => 'admin-users',
-      'users'  => $this->usersModel->getAllUsers()
+      'users'  => $this->usersModel->get()->getResultArray()
     ];
     // dd($data);
     return view('dashboard/admin/users/main/index', $data);
@@ -86,68 +86,21 @@ class Main extends BaseController
   public function edit($id)
   {
     $data = [
-      'title'  => 'Edit User | sportpedia',
+      'title'  => 'Edit User | Sportpedia',
       'active' => 'admin-users',
       'validation' => \Config\Services::validation(),
-      'user'  => $this->usersModel->getUserById($id),
-      'roles' => $this->rolesModel->get()->getResultArray()
+      'user'  => $this->usersModel->getWhere(['id' => $id])->getRowArray(),
+      'groups' => $this->groupsModel->get()->getResultArray()
     ];
+    // dd($data);
     return view('dashboard/admin/users/main/edit', $data);
   }
 
   public function update($id)
   {
 
-    $user = $this->usersModel->getWhere(['id' => $id])->getRowArray();
-    $email = $this->request->getVar('email');
-    $username = $this->request->getVar('username');
-
-    $rules = [];
-
-    if ($email == $user['email']) {
-      $rules['email'] = 'required|valid_email';
-    } else {
-      $rules['email'] = 'required|valid_email|is_unique[users.email]';
-    }
-    if ($username == $user['username']) {
-      $rules['username'] = 'required|alpha_numeric_space|min_length[3]|max_length[30]';
-    } else {
-      $rules['username'] = 'required|alpha_numeric_space|min_length[3]|max_length[30]|is_unique[users.username]';
-    }
-
-
-    $pass = $this->request->getVar('password');
-    if ($pass) {
-      $rules['password'] = 'strong_password';
-      $rules['pass_confirm'] = 'matches[password]';
-      $password = password_hash($pass, PASSWORD_DEFAULT);
-      $password = $pass;
-    } else {
-      $password = $user['password_hash'];
-    }
-
-
-    if (!$this->validate($rules)) {
-      return redirect()->to('/admin/users/main/edit/' . $id)->withInput()->with('errors', $this->validator->getErrors());
-    }
-
-    dd($password);
-    $this->usersModel->save([
-      'id' => $id,
-      'username' => $username,
-      'email' => $email,
-      'password_hash' => $password,
-      'active' => 1
-    ]);
-
-    $aguId = $this->groupsUsersModel->getWhere(['user_id' => $id])->getRowArray();
-    $this->groupsUsersModel->save([
-      'id' => $aguId,
-      'group_id' => $this->request->getVar('role-id'),
-    ]);
-
-    session()->setFlashdata('message', 'Data user berhasil diubah!');
-    return redirect()->to('/admin/users/main');
+    // session()->setFlashdata('message', 'Data user berhasil diubah!');
+    // return redirect()->to('/admin/users/main');
   }
   // End Edit
 
