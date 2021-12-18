@@ -7,7 +7,7 @@
 <section class="py-2">
   <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-      <h6 class="m-0 font-weight-bold text-primary">Tambah Facilitas</h6>
+      <h6 class="m-0 font-weight-bold text-primary">Tambah Fasilitas</h6>
     </div>
     <div class="card-body">
       <form action="/admin/facilities/save" method="post" class="user" enctype="multipart/form-data">
