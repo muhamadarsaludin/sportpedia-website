@@ -1,25 +1,31 @@
 <?php
 
-namespace App\Controllers\Admin\Vendors;
+namespace App\Controllers\Admin\Venue;
 
 use App\Controllers\BaseController;
 
-use App\Models\VendorsModel;
-use App\Models\VendorsLevelsModel;
+use App\Models\VenueModel;
+use App\Models\VenueLevelsModel;
 use App\Models\UsersModel;
+use App\Models\GroupsModel;
+use App\Models\GroupsUsersModel;
 
 class Main extends BaseController
 {
-  protected $vendorsModel;
-  protected $vendorsLevelsModel;
-  protected $UsersModel;
+  protected $venueModel;
+  protected $venueLevelsModel;
+  protected $usersModel;
+  protected $groupsModel;
+  protected $groupsUsersModel;
 
 
   public function __construct()
   {
-    $this->vendorsModel = new VendorsModel();
-    $this->vendorsLevelsModel = new VendorsLevelsModel();
+    $this->venueModel = new VenueModel();
+    $this->venueLevelsModel = new VenueLevelsModel();
     $this->usersModel = new UsersModel();
+    $this->groupsModel = new GroupsModel();
+    $this->groupsUsersModel = new GroupsUsersModel();
     helper('text');
   }
 
@@ -27,12 +33,12 @@ class Main extends BaseController
   public function index()
   {
     $data = [
-      'title'  => 'Daftar Vendor | Sportpedia',
-      'active' => 'admin-vendor',
-      'vendors'  => $this->vendorsModel->getAllVendors(),
+      'title'  => 'Daftar Venue | Sportpedia',
+      'active' => 'admin-venue',
+      'venues'  => $this->venueModel->get()->getResultArray(),
     ];
     // dd($data);
-    return view('dashboard/admin/vendors/main/index', $data);
+    return view('dashboard/admin/venue/main/index', $data);
   }
 
 
@@ -40,31 +46,38 @@ class Main extends BaseController
   public function detail($id)
   {
     $data = [
-      'title'  => 'Detail Vendor | Sportpedia',
-      'active' => 'admin-vendors',
-      'vendor' => $this->vendorsModel->getWhere(['id' => $id])->getRowArray(),
+      'title'  => 'Detail Venue | Sportpedia',
+      'active' => 'admin-venue',
+      'venue' => $this->venueModel->getWhere(['id' => $id])->getRowArray(),
+      'levels' => $this->venueLevelsModel->get()->getResultArray(),
     ];
-    $data['owner'] = $this->usersModel->getWhere(['id' => $data['vendor']['user_id']])->getRowArray();
+    $data['owner'] = $this->usersModel->getWhere(['id' => $data['venue']['user_id']])->getRowArray();
     // dd($data);
-    return view('dashboard/admin/vendors/main/detail', $data);
+    return view('dashboard/admin/venue/main/detail', $data);
   }
 
   // Add Data
   public function add()
   {
     $data = [
-      'title'  => 'Tambah Vendor | Sportpedia',
-      'active' => 'admin-vendors',
+      'title'  => 'Tambah Venue | Sportpedia',
+      'active' => 'admin-venue',
       'validation' => \Config\Services::validation(),
-      'levels' => $this->vendorsLevelsModel->get()->getResultArray()
+      'levels' => $this->venueLevelsModel->get()->getResultArray()
     ];
-    return view('dashboard/admin/vendors/main/add', $data);
+    return view('dashboard/admin/venue/main/add', $data);
   }
   public function save()
   {
     if (!$this->validate([
-      'vendor-name' => 'required|is_unique[vendors.vendor_name]',
+      'venue_name' => 'required|is_unique[venue.venue_name]',
       'email' => 'required|valid_email',
+      'level_id' => 'required',
+      'city' => 'required',
+      'province' => 'required',
+      'postal_code' => 'required',
+      'address' => 'required',
+      'description' => 'required',
       'logo' => [
         'rules'  => 'uploaded[logo]|max_size[logo,5024]|ext_in[logo,png,jpg,jpeg,svg]',
         'errors' => [
@@ -72,26 +85,38 @@ class Main extends BaseController
         ]
       ],
     ])) {
-      return redirect()->to('/admin/vendors/main/add')->withInput()->with('errors', $this->validator->getErrors());
+      return redirect()->to('/admin/venue/main/add')->withInput()->with('errors', $this->validator->getErrors());
     }
     $user = $this->usersModel->getWhere(['email' => $this->request->getVar('email')])->getRowArray();
-    $vendorName = $this->request->getVar('vendor-name');
-    $slug = url_title($vendorName, '-') . '-' . random_string('numeric', 5);
-
+    $venueName = $this->request->getVar('venue_name');
+    $slug = strtolower(url_title($venueName, '-') . '-' . random_string('numeric', 4));
     $logo = $this->request->getFile('logo');
-    $logo->move('img/vendors/logos');
-    $logoName = $logo->getName();
+    $logoName = $logo->getRandomName();
+    $logo->move('img/venue/logos', $logoName);
 
-    $this->vendorsModel->save([
-      'vendor_name' => $vendorName,
+    $this->venueModel->save([
+      'venue_name' => $venueName,
       'user_id' => $user['id'],
       'slug' => $slug,
-      'vendor_level_id' => $this->request->getVar('level'),
-      'vendor_logo' => $logoName,
-      'active' => 1
+      'level_id' => $this->request->getVar('level_id'),
+      'logo' => $logoName,
+      'city' => $this->request->getVar('city'),
+      'province' => $this->request->getVar('province'),
+      'postal_code' => $this->request->getVar('postal_code'),
+      'address' => $this->request->getVar('address'),
+      'description' => $this->request->getVar('description'),
     ]);
-    session()->setFlashdata('message', 'Vendor baru berhasil ditambahkan!');
-    return redirect()->to('/admin/vendors/main');
+
+    // Change role user to owner
+    $venueGroup = $this->groupsModel->getWhere(['name' => 'owner'])->getRowArray();
+    $myGroup = $this->groupsUsersModel->getWhere(['user_id' => $user['id']])->getRowArray();
+    $this->groupsUsersModel->save([
+      'id' => $myGroup['id'],
+      'group_id' => $venueGroup['id'],
+    ]);
+
+    session()->setFlashdata('message', 'Venue baru berhasil ditambahkan!');
+    return redirect()->to('/admin/venue/main');
   }
 
 
@@ -99,30 +124,36 @@ class Main extends BaseController
   public function edit($id)
   {
     $data = [
-      'title'  => 'Edit Vendor | sportpedia',
-      'active' => 'admin-vendors',
+      'title'  => 'Edit Venue | Sportpedia',
+      'active' => 'admin-venue',
       'validation' => \Config\Services::validation(),
-      'vendor'  => $this->vendorsModel->getWhere(['id' => $id])->getRowArray(),
-      'levels' => $this->vendorsLevelsModel->get()->getResultArray()
+      'levels' => $this->venueLevelsModel->get()->getResultArray(),
+      'venue' => $this->venueModel->getWhere(['id' => $id])->getRowArray(),
     ];
-    $data['owner'] = $this->usersModel->getWhere(['id' => $data['vendor']['user_id']])->getRowArray();
+    $data['owner'] = $this->usersModel->getWhere(['id' => $data['venue']['user_id']])->getRowArray();
     // dd($data);
-    return view('dashboard/admin/vendors/main/edit', $data);
+    return view('dashboard/admin/venue/main/edit', $data);
   }
   public function update($id)
   {
-    $vendor = $this->vendorsModel->getWhere(['id' => $id])->getRowArray();
+    $venue = $this->venueModel->getWhere(['id' => $id])->getRowArray();
+    $rulesVenueName = 'required';
+    $slug = $venue['slug'];
 
-    if ($vendor['vendor_name'] == $this->request->getVar('vendor-name')) {
-      $rulesVendorName = 'required';
-      $slug = $vendor['slug'];
-    } else {
-      $rulesVendorName = 'required|is_unique[vendors.vendor_name]';
-      $slug = url_title($this->request->getVar('vendor-name'), '-') . '-' . random_string('numeric', 5);
+    if ($venue['venue_name'] != $this->request->getVar('venue_name')) {
+      $rulesVenueName = 'required|is_unique[venue.venue_name]';
+      $slug = strtolower(url_title($this->request->getVar('venue_name'), '-') . '-' . random_string('numeric', 4));
     }
+
     if (!$this->validate([
-      'vendor-name' => $rulesVendorName,
+      'venue_name' => $rulesVenueName,
       'email' => 'required|valid_email',
+      'level_id' => 'required',
+      'city' => 'required',
+      'province' => 'required',
+      'postal_code' => 'required',
+      'address' => 'required',
+      'description' => 'required',
       'logo' => [
         'rules'  => 'max_size[logo,5024]|ext_in[logo,png,jpg,jpeg,svg]',
         'errors' => [
@@ -130,46 +161,60 @@ class Main extends BaseController
         ]
       ],
     ])) {
-      return redirect()->to('/admin/vendors/main/edit/' . $id)->withInput()->with('errors', $this->validator->getErrors());
+      return redirect()->to('/admin/venue/main/edit/' . $id)->withInput()->with('errors', $this->validator->getErrors());
     }
+
+
     $user = $this->usersModel->getWhere(['email' => $this->request->getVar('email')])->getRowArray();
     $logo = $this->request->getFile('logo');
 
     if ($logo->getError() == 4) {
-      $logoName = $vendor['vendor_logo'];
+      $logoName = $venue['logo'];
     } else {
       // pindahkan file
-      $logo->move('img/vendors/logos');
-      $logoName = $logo->getName();
+      $logoName = $logo->getRandomName();
+      $logo->move('img/venue/logos', $logoName);
       // hapus file lama
-      if ($vendor['vendor_logo'] != 'default.png') {
-        unlink('img/vendors/logos/' . $vendor['vendor_logo']);
+      if ($venue['logo'] != 'default.png') {
+        unlink('img/venue/logos/' . $venue['logo']);
       }
     }
-    $this->vendorsModel->save([
+    $this->venueModel->save([
       'id' => $id,
-      'vendor_name' => $this->request->getVar('vendor-name'),
+      'venue_name' => $this->request->getVar('venue_name'),
       'user_id' => $user['id'],
       'slug' => $slug,
-      'vendor_level_id' => $this->request->getVar('level'),
-      'vendor_logo' => $logoName,
-      'active' => 1
+      'level_id' => $this->request->getVar('level_id'),
+      'logo' => $logoName,
+      'city' => $this->request->getVar('city'),
+      'province' => $this->request->getVar('province'),
+      'postal_code' => $this->request->getVar('postal_code'),
+      'address' => $this->request->getVar('address'),
+      'description' => $this->request->getVar('description'),
     ]);
-    session()->setFlashdata('message', 'Vendor berhasil diedit!');
-    return redirect()->to('/admin/vendors/main');
+    session()->setFlashdata('message', 'Venue berhasil diubah!');
+    return redirect()->to('/admin/venue/main');
   }
   // End Edit
 
   public function delete($id)
   {
     // cari role berdasarkan id
-    $vendor = $this->vendorsModel->getWhere(['id' => $id])->getRowArray();
-    if ($vendor['vendor_logo'] != 'default.png') {
-      unlink('img/vendors/logos/' . $vendor['vendor_logo']);
+    $venue = $this->venueModel->getWhere(['id' => $id])->getRowArray();
+    if ($venue['logo'] != 'default.png') {
+      unlink('img/venue/logos/' . $venue['logo']);
     }
 
-    $this->vendorsModel->delete($id);
-    session()->setFlashdata('message', 'Vendors berhasil dihapus!');
-    return redirect()->to('/admin/vendors/main');
+    // Change role from owner to user
+    $venueGroup = $this->groupsModel->getWhere(['name' => 'user'])->getRowArray();
+    $myGroup = $this->groupsUsersModel->getWhere(['user_id' => $venue['user_id']])->getRowArray();
+    $this->groupsUsersModel->save([
+      'id' => $myGroup['id'],
+      'group_id' => $venueGroup['id'],
+    ]);
+
+    $this->venueModel->delete($id);
+    session()->setFlashdata('message', 'venue berhasil dihapus!');
+    return redirect()->to('/admin/venue/main');
   }
 }

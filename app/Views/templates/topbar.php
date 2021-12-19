@@ -121,17 +121,17 @@
       </li>
 
       <div class="topbar-divider d-none d-sm-block"></div>
-
-      <!-- Nav Item - User Information -->
-      <li class="nav-item dropdown no-arrow">
-        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= user() ? user()->username : ''; ?></span>
-          <img class="img-profile rounded-circle" src="/img/users/<?= logged_in() ? my_info()->user_image : 'default.png'; ?>">
-        </a>
-        <!-- Dropdown - User Information -->
-        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-          <?php if (logged_in()) : ?>
-            <a class="dropdown-item" href="#">
+      <!-- Nav Item - Venue  -->
+      <?php if (logged_in()) : ?>
+        <li class="d-none d-lg-block nav-item dropdown no-arrow">
+          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img class="img-profile rounded-circle mr-2" src="/img/venue/logos/default.png">
+            <span class="d-none d-lg-inline text-gray-600 small"><?= venue() ? venue()->venue_name : 'Daftar Mitra Venue'; ?></span>
+          </a>
+          <!-- Dropdown - User Information -->
+          <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+            <?php if (logged_in()) : ?>
+              <!-- <a class="dropdown-item" href="#">
               <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
               Profile
             </a>
@@ -139,12 +139,49 @@
               <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
               Settings
             </a>
-            <a class="dropdown-item" href="#">
-              <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-              Activity Log
+             -->
+              <!-- <div class="dropdown-divider"></div> -->
+              <a class="dropdown-item" href="/logout" data-toggle="modal" data-target="#logoutModal">
+                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                Logout
+              </a>
+            <?php else : ?>
+              <a class="dropdown-item" href="<?= base_url('login') ?>">
+                <i class="fas fa-sign-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                Login
+              </a>
+              <a class="dropdown-item" href="<?= base_url('register'); ?>">
+                <i class="fas fa-user-edit fa-sm fa-fw mr-2 text-gray-400"></i>
+                Registrasi
+              </a>
+            <?php endif; ?>
+          </div>
+        </li>
+      <?php endif; ?>
+
+
+
+
+      <!-- Nav Item - User Information -->
+      <li class="nav-item dropdown no-arrow">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img class="img-profile rounded-circle mr-2" src="/img/users/<?= logged_in() ? my_info()->user_image : 'default.png'; ?>">
+          <span class="d-none d-lg-inline text-gray-600 small"><?= user() ? user()->username : ''; ?></span>
+        </a>
+        <!-- Dropdown - User Information -->
+        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+          <?php if (logged_in()) : ?>
+            <!-- <a class="dropdown-item" href="#">
+              <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+              Profile
             </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+            <a class="dropdown-item" href="#">
+              <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+              Settings
+            </a>
+             -->
+            <!-- <div class="dropdown-divider"></div> -->
+            <a class="dropdown-item" href="/logout" data-toggle="modal" data-target="#logoutModal">
               <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
               Logout
             </a>
@@ -153,13 +190,14 @@
               <i class="fas fa-sign-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>
               Login
             </a>
-            <a class="dropdown-item" href="<?= base_url('registrasi'); ?>">
+            <a class="dropdown-item" href="<?= base_url('register'); ?>">
               <i class="fas fa-user-edit fa-sm fa-fw mr-2 text-gray-400"></i>
               Registrasi
             </a>
           <?php endif; ?>
         </div>
       </li>
+
 
     </ul>
 

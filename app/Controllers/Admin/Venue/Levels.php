@@ -99,7 +99,7 @@ class Levels extends BaseController
       'level_name' => $this->request->getVar('level_name'),
       'description' => $this->request->getVar('description'),
     ]);
-    session()->setFlashdata('message', 'Data Level berhasil diubah!');
+    session()->setFlashdata('message', 'Level berhasil diubah!');
     return redirect()->to('/admin/venue/levels/');
   }
   // End Edit
@@ -108,7 +108,7 @@ class Levels extends BaseController
   {
     // cari role berdasarkan id
     $this->venueLevelsModel->delete($id);
-    session()->setFlashdata('message', 'Data level berhasil dihapus!');
+    session()->setFlashdata('message', 'level berhasil dihapus!');
     return redirect()->to('/admin/venue/levels');
   }
 }
