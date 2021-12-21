@@ -132,20 +132,20 @@
 
   <!-- Heading -->
   <div class="sidebar-heading">
-    Vendor
+    Venue
   </div>
   <!-- Nav Item - Utilities Collapse Menu -->
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMyVendor" aria-expanded="true" aria-controls="collapseMyVendor">
       <i class="fas fa-fw fa-store"></i>
-      <span>Vendor Saya</span>
+      <span>Venue Saya</span>
     </a>
     <div id="collapseMyVendor" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Menu Vendor Saya</h6>
         <a class="collapse-item" href="#">Penilaian Vendor</a>
-        <a class="collapse-item" href="/vendors/myvendor/profile">Profil Vendor</a>
-        <a class="collapse-item" href="/vendors/myvendor/banner">Banner Vendor</a>
+        <a class="collapse-item" href="/venue/myvendor/profile">Profil Vendor</a>
+        <a class="collapse-item" href="/venue/myvendor/banner">Banner Vendor</a>
         <a class="collapse-item" href="#">Upgrade Vendor</a>
       </div>
     </div>
@@ -159,7 +159,7 @@
     <div id="collapseArenaVendor" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Menu Arena</h6>
-        <a class="collapse-item" href="/vendors/arena">Arena Saya</a>
+        <a class="collapse-item" href="/venue/arena/main">Daftar Arena</a>
       </div>
     </div>
   </li>

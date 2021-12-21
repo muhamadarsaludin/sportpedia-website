@@ -124,35 +124,28 @@
       <!-- Nav Item - Venue  -->
       <?php if (logged_in()) : ?>
         <li class="d-none d-lg-block nav-item dropdown no-arrow">
-          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img class="img-profile rounded-circle mr-2" src="/img/venue/logos/default.png">
-            <span class="d-none d-lg-inline text-gray-600 small"><?= venue() ? venue()->venue_name : 'Daftar Mitra Venue'; ?></span>
-          </a>
+
+          <?php if (venue()) : ?>
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img class="img-profile rounded-circle mr-2" src="/img/venue/logos/<?= venue() ? venue()->logo : 'default.png'; ?>">
+              <span class="d-none d-lg-inline text-gray-600 small"><?= venue() ? venue()->venue_name : 'Nama Venue Belum diatur'; ?></span>
+            </a>
+          <?php else : ?>
+            <a class="nav-link" href="/venue/register" id="">
+              <img class="img-profile rounded-circle mr-2" src="/img/venue/logos/default.png">
+              <span class="d-none d-lg-inline text-gray-600 small">Daftar Mitra Venue</span>
+            </a>
+          <?php endif; ?>
           <!-- Dropdown - User Information -->
           <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-            <?php if (logged_in()) : ?>
-              <!-- <a class="dropdown-item" href="#">
-              <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-              Profile
-            </a>
-            <a class="dropdown-item" href="#">
-              <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-              Settings
-            </a>
-             -->
-              <!-- <div class="dropdown-divider"></div> -->
-              <a class="dropdown-item" href="/logout" data-toggle="modal" data-target="#logoutModal">
-                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                Logout
+            <?php if (venue()) : ?>
+              <a class="dropdown-item" href="/dashboard">
+                <i class="fas fa-sm fa-fw fa-tachometer-alt mr-2 text-gray-400"></i>
+                Dasboard
               </a>
-            <?php else : ?>
-              <a class="dropdown-item" href="<?= base_url('login') ?>">
-                <i class="fas fa-sign-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                Login
-              </a>
-              <a class="dropdown-item" href="<?= base_url('register'); ?>">
-                <i class="fas fa-user-edit fa-sm fa-fw mr-2 text-gray-400"></i>
-                Registrasi
+              <a class="dropdown-item" href="/venue/upgrade">
+                <i class="fas fa-sm fa-fw fa-rocket mr-2 text-gray-400"></i>
+                Upgrade Venue
               </a>
             <?php endif; ?>
           </div>
