@@ -38,38 +38,44 @@
   </div>
   <!-- End Category -->
 
-  <!-- Show All Arena -->
-  <div class="card shadow mb-4">
-    <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">Futsal</h6>
+  <?php foreach ($sports as $sport) : ?>
+    <!-- Show All Arena -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary"><?= $sport['sport_name']; ?></h6>
+        <a href="/sports/<?= $sport['slug']; ?>">Selengkapnya</a>
+      </div>
     </div>
-  </div>
-
-  <div class="row mb-4">
-    <div class="col-12 col-lg-3">
-      <a href="/arena/slug" class="clear-style">
-        <div class="card shadow text-gray-600">
-          <img class="card-img-top img-card-arena" src="/img/venue/arena/main-images/arena1.jpg">
-          <div class="card-body">
-            <h6 class="m-0 font-weight-bold d-inline mr-2 text-gray-700">Aulia Sport Center</h6><span class="badge badge-primary">Futsal</span>
-            <p class="mt-1"><span class="small">start from</span> <span class="card-price text-primary font-weight-bold text-lg">Rp<?= number_format(150000, 0, ',', '.'); ?>,-</span></p>
-            <div class="rating">
-              <span class="fa fa-star text-warning"></span>
-              <span class="fa fa-star text-warning"></span>
-              <span class="fa fa-star text-warning"></span>
-              <span class="fa fa-star text-warning"></span>
-              <span class="fa fa-star text-secondary"></span>
-              <span class="small">4.2 | 200 Penilaian</span>
-            </div>
-          </div>
-          <div class="card-footer">
-            <p class="m-0">Tasikmalaya</p>
+    <?php foreach ($arenas as $arena) : ?>
+      <?php if ($arena['sport_id'] == $sport['id']) : ?>
+        <div class="row mb-4">
+          <div class="col-12 col-lg-3">
+            <a href="/main/arena/<?= $arena['slug']; ?>" class="clear-style">
+              <div class="card shadow text-gray-600">
+                <img class="card-img-top img-card-arena" src="/img/venue/arena/main-images/<?= $arena['arena_image']; ?>">
+                <div class="card-body">
+                  <h6 class="m-0 font-weight-bold d-inline mr-2 text-gray-700"><?= $arena['venue_name']; ?></h6><span class="badge badge-primary"><?= $arena['level_name']; ?></span>
+                  <p class="mt-1"><span class="text-xs">start from</span> <span class="card-price text-primary font-weight-bold text-lg">Rp<?= number_format(150000, 0, ',', '.'); ?>,-</span></p>
+                  <div class="rating">
+                    <span class="fa fa-star text-warning"></span>
+                    <span class="fa fa-star text-warning"></span>
+                    <span class="fa fa-star text-warning"></span>
+                    <span class="fa fa-star text-warning"></span>
+                    <span class="fa fa-star text-secondary"></span>
+                    <span class="text-xs">4.2 | 200 Penilaian</span>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <p class="m-0"><?= $arena['city']; ?></p>
+                </div>
+              </div>
+            </a>
           </div>
         </div>
-      </a>
-    </div>
-  </div>
+      <?php endif; ?>
+    <?php endforeach; ?>
 
+  <?php endforeach; ?>
 </section>
 <?php $this->endSection(); ?>
 <!-- END CONTENT -->

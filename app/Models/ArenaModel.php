@@ -9,4 +9,34 @@ class ArenaModel extends Model
   protected $table = 'arena';
   protected $allowedFields = ['venue_id', 'sport_id', 'arena_name', 'slug', 'arena_image', 'rating', 'description', 'active'];
   protected $useTimestamps = true;
+
+
+  public function getAllArena()
+  {
+    $query = "SELECT `a`.*,`s`.`sport_name`,`v`.`venue_name`,`v`.`logo`,`v`.`city`,`v`.`province`,`v`.`postal_code`,`v`.`address`,`vl`.`level_name`
+    FROM `arena` AS `a`
+    JOIN `sports` AS `s`
+    ON `a`.`sport_id` = `s`.`id`
+    JOIN `venue` AS `v`
+    ON `v`.`id` = `a`.`venue_id`
+    JOIN `venue_levels` AS `vl`
+    ON `vl`.`id` = `v`.`level_id`
+    ";
+    return $this->db->query($query);
+  }
+
+  public function getArenaBySlug($slug)
+  {
+    $query = "SELECT `a`.*,`s`.`sport_name`,`v`.`venue_name`,`v`.`logo`,`v`.`city`,`v`.`province`,`v`.`postal_code`,`v`.`address`,`vl`.`level_name`
+    FROM `arena` AS `a`
+    JOIN `sports` AS `s`
+    ON `a`.`sport_id` = `s`.`id`
+    JOIN `venue` AS `v`
+    ON `v`.`id` = `a`.`venue_id`
+    JOIN `venue_levels` AS `vl`
+    ON `vl`.`id` = `v`.`level_id`
+    WHERE `a`.`slug` = '$slug'
+    ";
+    return $this->db->query($query);
+  }
 }

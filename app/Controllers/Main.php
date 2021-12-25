@@ -38,8 +38,20 @@ class Main extends BaseController
       'title'  => 'Home | Sportpedia',
       'banners' => $this->bannersModel->getWhere(['venue_id' => null, 'active' => 1])->getResultArray(),
       'sports' => $this->sportsModel->getWhere(['active' => 1])->getResultArray(),
+      'arenas' => $this->arenaModel->getAllArena()->getResultArray()
     ];
     // dd(my_info());
     return view('public/index', $data);
+  }
+
+  public function arena($slug)
+  {
+    $data = [
+      'title' => 'Arena | Sportpedia',
+      'arena' => $this->arenaModel->getArenaBySlug($slug)->getRowArray(),
+    ];
+    $data['images'] = $this->arenaImagesModel->getWhere(['arena_id' => $data['arena']['id']])->getResultArray();
+    // dd($data);
+    return view('public/arena', $data);
   }
 }

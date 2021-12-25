@@ -7,6 +7,8 @@ use App\Controllers\BaseController;
 use App\Models\ArenaModel;
 use App\Models\ArenaImagesModel;
 use App\Models\ArenaFacilitiesModel;
+use App\Models\FieldsModel;
+use App\Models\FacilitiesModel;
 use App\Models\SportsModel;
 use App\Models\VenueModel;
 use App\Models\VenueLevelsModel;
@@ -19,6 +21,8 @@ class Main extends BaseController
   protected $arenaModel;
   protected $arenaImagesModel;
   protected $arenaFacilitiesModel;
+  protected $fieldsModel;
+  protected $facilitiesModel;
   protected $sportsModel;
   protected $venueModel;
   protected $venueLevelsModel;
@@ -32,6 +36,8 @@ class Main extends BaseController
     $this->arenaModel = new ArenaModel();
     $this->arenaImagesModel = new ArenaImagesModel();
     $this->arenaFacilitiesModel = new ArenaFacilitiesModel();
+    $this->fieldsModel = new FieldsModel();
+    $this->facilitiesModel = new FacilitiesModel();
     $this->sportsModel = new SportsModel();
     $this->venueModel = new VenueModel();
     $this->venueLevelsModel = new VenueLevelsModel();
@@ -118,9 +124,22 @@ class Main extends BaseController
       }
     }
     session()->setFlashdata('message', 'Arena ' . $sport['sport_name'] . ' berhasil ditambahkan!');
-    return redirect()->to('/venue/arena/main');
+    return redirect()->to('/venue/arena/main/detail/' . $arena['slug']);
   }
 
+  // Detail Arena
+  public function detail($slug)
+  {
+    $data = [
+      'title' => 'Detail Arena | Sportpedia',
+      'arena' => $this->arenaModel->getArenaBySlug($slug)->getRowArray(),
+    ];
+    $data['fields'] = $this->fieldsModel->getWhere(['arena_id' => $data['arena']['id']])->getResultArray();
+    $data['facilities'] = $this->facilitiesModel->getArenaFacilitiesByArenaId($data['arena']['id'])->getResultArray();
+    $data['images'] = $this->arenaImagesModel->getWhere(['arena_id' => $data['arena']['id']])->getResultArray();
+    // dd($data);
+    return view('dashboard/venue/arena/main/detail', $data);
+  }
 
   public function delete($id)
   {

@@ -13,7 +13,7 @@
       <form action="/admin/facilities/save" method="post" class="user" enctype="multipart/form-data">
         <?= csrf_field(); ?>
         <div class="form-group row">
-          <label for="facility_name" class="col-sm-2 col-form-label">Nama Fasilitas</label>
+          <label for="facility_name" class="col-sm-2 col-form-label">Nama Fasilitas <sup class="text-danger font-weight-bold">*</sup></label>
           <div class="col-sm-10">
             <input type="text" class="form-control form-control-user <?= ($validation->hasError('facility_name') ? 'is-invalid' : ''); ?>" id="facility_name" name="facility_name" placeholder="Nama Fasilitas">
             <div class="invalid-feedback">
@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="icon" class="col-sm-2 col-form-label">Icon</label>
+          <label for="icon" class="col-sm-2 col-form-label">Icon <sup class="text-danger font-weight-bold">*</sup></label>
           <div class="col-sm-10">
             <input type="text" class="form-control form-control-user <?= ($validation->hasError('icon') ? 'is-invalid' : ''); ?>" id="icon" name="icon" placeholder="Class fontawesome">
             <div class="invalid-feedback">
@@ -33,7 +33,7 @@
         <div class="form-group row">
           <label for="description" class="col-sm-2 col-form-label">Deskripsi</label>
           <div class="col-sm-10">
-            <textarea class="form-control" id="description" name="description" placeholder="Deskripsi olahraga" rows="4"></textarea>
+            <textarea class="form-control" id="description" name="description" placeholder="Deskripsi fasilitias" rows="4"></textarea>
           </div>
         </div>
         <div class="text-right" width="100%">

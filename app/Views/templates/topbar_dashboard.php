@@ -118,15 +118,48 @@
 
       <div class="topbar-divider d-none d-sm-block"></div>
 
+      <!-- Nav Item - Venue  -->
+      <?php if (logged_in()) : ?>
+        <li class="d-none d-lg-block nav-item dropdown no-arrow">
+
+          <?php if (venue()) : ?>
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img class="img-profile rounded-circle mr-2" src="/img/venue/logos/<?= venue() ? venue()->logo : 'default.png'; ?>">
+              <span class="d-none d-lg-inline text-gray-600 small"><?= venue() ? venue()->venue_name : 'Nama Venue Belum diatur'; ?></span>
+            </a>
+          <?php else : ?>
+            <a class="nav-link" href="/venue/register" id="">
+              <img class="img-profile rounded-circle mr-2" src="/img/venue/logos/default.png">
+              <span class="d-none d-lg-inline text-gray-600 small">Daftar Mitra Venue</span>
+            </a>
+          <?php endif; ?>
+          <!-- Dropdown - User Information -->
+          <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+            <?php if (venue()) : ?>
+              <a class="dropdown-item" href="/dashboard">
+                <i class="fas fa-sm fa-fw fa-tachometer-alt mr-2 text-gray-400"></i>
+                Dasboard
+              </a>
+              <a class="dropdown-item" href="/venue/upgrade">
+                <i class="fas fa-sm fa-fw fa-rocket mr-2 text-gray-400"></i>
+                Upgrade Venue
+              </a>
+            <?php endif; ?>
+          </div>
+        </li>
+      <?php endif; ?>
+
+
       <!-- Nav Item - User Information -->
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-          <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= user() ? user()->username : ''; ?></span>
 
-          <img class="img-profile rounded-circle" src="/img/users/default.png">
+          <img class="img-profile rounded-circle mr-2" src="/img/users/default.png">
+          <span class="d-none d-lg-inline text-gray-600 small"><?= user() ? user()->username : ''; ?></span>
 
         </a>
+
         <!-- Dropdown - User Information -->
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
           <?php if (logged_in()) : ?>

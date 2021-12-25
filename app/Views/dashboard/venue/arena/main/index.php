@@ -55,7 +55,7 @@
                 <td><?= $arena['rating'] == null ? 'Belum Ada Penilaian' : $arena['rating']; ?></td>
                 <td><?= $arena['active'] == 1 ? 'Aktif' : 'Non Aktif'; ?></td>
                 <td class="text-center">
-                  <a href="/venue/arena/main/detail/<?= $arena['id']; ?>" class="btn btn-info btn-sm"><i class="d-lg-none fa fa-pencil-alt"></i><span class="d-none d-lg-inline">Detail</span></a>
+                  <a href="/venue/arena/main/detail/<?= $arena['slug']; ?>" class="btn btn-info btn-sm"><i class="d-lg-none fa fa-pencil-alt"></i><span class="d-none d-lg-inline">Detail</span></a>
                   <a href="/venue/arena/main/edit/<?= $arena['id']; ?>" class="btn btn-warning btn-sm"><i class="d-lg-none fa fa-pencil-alt"></i><span class="d-none d-lg-inline">Edit</span></a>
                   <form action="/venue/arena/main/<?= $arena['id']; ?>" method="POST" class="d-inline form-delete">
                     <?= csrf_field(); ?>
