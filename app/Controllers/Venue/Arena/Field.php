@@ -4,6 +4,8 @@ namespace App\Controllers\Venue\Arena;
 
 use App\Controllers\BaseController;
 
+use App\Models\FieldSpecificationsModel;
+use App\Models\SpecificationsModel;
 use App\Models\ArenaModel;
 use App\Models\ArenaImagesModel;
 use App\Models\ArenaFacilitiesModel;
@@ -15,9 +17,12 @@ use App\Models\VenueLevelsModel;
 use App\Models\UsersModel;
 use App\Models\GroupsModel;
 use App\Models\GroupsUsersModel;
+use phpDocumentor\Reflection\Types\This;
 
 class Field extends BaseController
 {
+  protected $fieldSpecificationsModel;
+  protected $specificationsModel;
   protected $arenaModel;
   protected $arenaImagesModel;
   protected $arenaFacilitiesModel;
@@ -33,6 +38,8 @@ class Field extends BaseController
 
   public function __construct()
   {
+    $this->fieldspecificationsModel = new FieldSpecificationsModel();
+    $this->specificationsModel = new SpecificationsModel();
     $this->arenaModel = new ArenaModel();
     $this->arenaImagesModel = new ArenaImagesModel();
     $this->arenaFacilitiesModel = new ArenaFacilitiesModel();
@@ -54,6 +61,7 @@ class Field extends BaseController
       'title'  => 'Tambah Lapangan | Sportpedia',
       'active' => 'venue-arena',
       'arena' => $arena,
+      'specs' => $this->specificationsModel->getWhere(['sport_id' => $arena['sport_id']])->getResultArray(),
       'validation' => \Config\Services::validation(),
     ];
     // dd($data);

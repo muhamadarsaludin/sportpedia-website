@@ -30,6 +30,23 @@
                 </div>
                 <p class="text-center">Gambar Utama<sup class="text-danger font-weight-bold">*</sup></p>
               </div>
+
+            </div>
+            <div class="row">
+              <?php for ($i = 1; $i <= 4; $i++) : ?>
+                <div class="col-6 col-lg-3 text-center">
+                  <div class="img-add img-add-short">
+                    <label for="image-<?= $i; ?>">
+                      <img src="/img/plus-circle.svg" class="image-preview-<?= $i; ?> icon-plus" />
+                    </label>
+                    <input id="image-<?= $i; ?>" name="image-<?= $i; ?>" type="file" class="<?= (session('errors.image-<?=$i;?>') ? 'is-invalid' : ''); ?>" onchange="previewImg('image-<?= $i; ?>','image-preview-<?= $i; ?>')" />
+                    <div class="invalid-feedback text-center">
+                      <?= $validation->getError("image-" . $i); ?>
+                    </div>
+                  </div>
+                  <p class="">Gambar <?= $i; ?></p>
+                </div>
+              <?php endfor; ?>
             </div>
           </div>
         </div>
@@ -46,6 +63,21 @@
             </div>
           </div>
         </div>
+
+        <?php foreach ($specs as $spec) : ?>
+          <div class="form-group row">
+            <label for="spec-<?= $spec['id']; ?>" class="col-sm-2 col-form-label"><?= $spec['spec_name']; ?></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control form-control-user <?= (session('errors.spec-' . $spec['id']) ? 'is-invalid' : ''); ?>" id="spec-<?= $spec['id']; ?>" name="spec-<?= $spec['id']; ?>" value="<?= old('spec-' . $spec['id']) ? old('spec-' . $spec['id']) : ''; ?>" placeholder="Nilai spesifikasi">
+              <div class="invalid-feedback">
+                <?= $validation->getError('spec-' . $spec['id']); ?>
+              </div>
+            </div>
+          </div>
+        <?php endforeach; ?>
+
+
+
         <div class="form-group row">
           <label for="description" class="col-sm-2 col-form-label">Deskripsi</label>
           <div class="col-sm-10">

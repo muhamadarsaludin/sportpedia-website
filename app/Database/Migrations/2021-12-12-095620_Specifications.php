@@ -24,10 +24,6 @@ class Specifications extends Migration
                 'type' => 'varchar',
                 'constraint' => 128,
             ],
-            'spec_icon' => [
-                'type' => 'varchar',
-                'constraint' => 128,
-            ],
             'description' => [
                 'type' => 'text',
                 'null' => true

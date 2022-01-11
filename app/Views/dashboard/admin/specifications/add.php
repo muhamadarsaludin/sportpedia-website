@@ -21,15 +21,7 @@
             </div>
           </div>
         </div>
-        <div class="form-group row">
-          <label for="spec_icon" class="col-sm-2 col-form-label">Icon</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control form-control-user <?= ($validation->hasError('spec_icon') ? 'is-invalid' : ''); ?>" id="spec_icon" name="spec_icon" placeholder="Class fontawesome">
-            <div class="invalid-feedback">
-              <?= $validation->getError('spec_icon'); ?>
-            </div>
-          </div>
-        </div>
+
         <div class="form-group row">
           <label for="sport_id" class="col-sm-2 col-form-label">Olahraga<sup class="text-danger font-weight-bold">*</sup></label>
           <div class="col-sm-10">

@@ -25,15 +25,6 @@
             </div>
           </div>
         </div>
-        <div class="form-group row">
-          <label for="spec_icon" class="col-sm-2 col-form-label">Icon<sup class="text-danger font-weight-bold">*</sup></label>
-          <div class="col-sm-10">
-            <h3><i class="<?= $spec['spec_icon']; ?>"></i></h3>
-            <input type="text" class="form-control form-control-user" id="spec_icon" name="spec_icon" placeholder="Nama olahraga..." value="<?= $spec['spec_icon']; ?>" readonly>
-            <div class="invalid-feedback">
-            </div>
-          </div>
-        </div>
 
         <div class="form-group row">
           <label for="sport_id" class="col-sm-2 col-form-label">Olahraga<sup class="text-danger font-weight-bold">*</sup></label>

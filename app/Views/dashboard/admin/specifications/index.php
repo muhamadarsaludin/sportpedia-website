@@ -28,7 +28,6 @@
           <thead>
             <tr>
               <th>No</th>
-              <th>Icon</th>
               <th>Spesifikasi</th>
               <th>Olahraga</th>
               <th>Status</th>
@@ -38,7 +37,6 @@
           <tfoot>
             <tr>
               <th>No</th>
-              <th>Icon</th>
               <th>Spesifikasi</th>
               <th>Olahraga</th>
               <th>Status</th>
@@ -50,7 +48,6 @@
             <?php foreach ($specifications as $spec) : ?>
               <tr>
                 <td><?= $i++; ?></td>
-                <td><i class="<?= $spec['spec_icon']; ?>"></i></td>
                 <td><?= $spec['spec_name']; ?></td>
                 <td><?= $spec['sport_id']; ?></td>
                 <td><?= $spec['active'] == 1 ? 'Aktif' : 'Non Aktif'; ?></td>

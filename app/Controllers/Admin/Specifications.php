@@ -60,14 +60,12 @@ class Specifications extends BaseController
   {
     if (!$this->validate([
       'spec_name' => 'required',
-      'spec_icon' => 'required',
       'sport_id' => 'required',
     ])) {
       return redirect()->to('/admin/specifications/add')->withInput()->with('errors', $this->validator->getErrors());
     }
     $this->specificationsModel->save([
       'spec_name' => $this->request->getVar('spec_name'),
-      'spec_icon' => $this->request->getVar('spec_icon'),
       'sport_id' => $this->request->getVar('sport_id'),
       'description' => $this->request->getVar('description'),
     ]);
@@ -93,7 +91,6 @@ class Specifications extends BaseController
   {
     if (!$this->validate([
       'spec_name' => 'required',
-      'spec_icon' => 'required',
       'sport_id' => 'required',
     ])) {
       return redirect()->to('/admin/specifications/edit/' . $id)->withInput()->with('errors', $this->validator->getErrors());
@@ -102,7 +99,6 @@ class Specifications extends BaseController
     $this->specificationsModel->save([
       'id'    => $id,
       'spec_name' => $this->request->getVar('spec_name'),
-      'spec_icon' => $this->request->getVar('spec_icon'),
       'sport_id' => $this->request->getVar('sport_id'),
       'description' => $this->request->getVar('description'),
     ]);

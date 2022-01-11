@@ -19,23 +19,23 @@
 
 <section class="mt-4">
   <!-- Category -->
-  <div class="card shadow mb-4">
+  <!-- <div class="card shadow mb-4">
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary">Kategori Olahraga</h6>
     </div>
     <div class="card-body">
       <div class="row">
-        <?php foreach ($sports as $sport) : ?>
+        <php foreach ($sports as $sport) : ?>
           <div class="col-3 col-lg-1">
-            <a href="/sports/<?= $sport['slug']; ?>">
-              <img src="/img/sports/<?= $sport['sport_icon']; ?>" alt="" class="img-category rounded w-100">
-              <p class="text-center text-gray-600"><?= $sport['sport_name']; ?></p>
+            <a href="/sports/<= $sport['slug']; ?>">
+              <img src="/img/sports/<= $sport['sport_icon']; ?>" alt="" class="img-category rounded w-100">
+              <p class="text-center text-gray-600"><= $sport['sport_name']; ?></p>
             </a>
           </div>
-        <?php endforeach; ?>
+        <php endforeach; ?>
       </div>
     </div>
-  </div>
+  </div> -->
   <!-- End Category -->
 
   <?php foreach ($sports as $sport) : ?>

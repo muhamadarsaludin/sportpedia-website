@@ -6,7 +6,7 @@
 <nav aria-label="breadcrumb pt-4">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item"><a href=""><?= $arena['venue_name']; ?></a></li>
+        <li class="breadcrumb-item"><a href="/main/venue/<?= $arena['venue_slug']; ?>"><?= $arena['venue_name']; ?></a></li>
         <li class="breadcrumb-item"><a href="">Arena <?= $arena['sport_name']; ?></a></li>
     </ol>
 </nav>
@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 text-right">
-                    <a href="/main/venue/" class="btn btn-primary btn-icon-split">
+                    <a href="/main/venue/<?= $arena['venue_slug']; ?>" class="btn btn-primary btn-icon-split">
                         <span class="icon text-white-50">
                             <i class="fas fa-fw fa-door-open"></i>
                         </span>
@@ -59,12 +59,23 @@
             </div>
             <hr class="sidebar-divider">
             <h6 class="text-pirmary font-weight-bold">Fasilitas</h6>
+            <?php if (session()->getFlashdata('facility-message')) : ?>
+                <div class="alert alert-success" role="alert">
+                    <?= session()->getFlashdata('facility-message'); ?>
+                </div>
+            <?php endif; ?>
+
+
             <div class="row align-items-center mt-4">
-                <?php for ($i = 0; $i < 12; $i++) : ?>
-                    <div class="col-lg-2 mb-1">
-                        <p><i class="fas fa-fw fa-toilet"></i> Toilet</p>
-                    </div>
-                <?php endfor; ?>
+                <?php foreach ($facilities as $facility) : ?>
+                    <?php if ($facility['served']) : ?>
+                        <div class="col-lg-3 mb-1 row">
+                            <div class="col-12">
+                                <p><i class="<?= $facility['icon']; ?>"></i> <?= $facility['facility_name']; ?></p>
+                            </div>
+                        </div>
+                    <?php endif ?>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
@@ -74,15 +85,15 @@
             <h6 class="m-0 font-weight-bold text-primary">Daftar Lapangan <?= $arena['sport_name']; ?></h6>
         </div>
     </div>
-    <?php for ($i = 1; $i < 4; $i++) : ?>
+    <?php foreach ($fields as $field) : ?>
         <div class="card shadow mb-4">
             <div class="card-body">
                 <div class="row align-items-center justify-content-between">
                     <div class="col-lg-2">
-                        <img src="/img/venue/arena/fields/main-images/default.jpg" alt="" class="w-100">
+                        <img src="/img/venue/arena/fields/main-images/<?= $field['field_image']; ?>" alt="" class="w-100">
                     </div>
                     <div class="col-lg-7">
-                        <h5 class="m-0 font-weight-bold d-inline mr-2 text-gray-700">Lapangan Futsal <?= $i; ?></h5>
+                        <h5 class="m-0 font-weight-bold d-inline mr-2 text-gray-700"><?= $field['field_name']; ?></h5>
                         <p class="mt-2 mb-0"><span class="small">start from</span> <span class="card-price text-primary font-weight-bold text-lg">Rp<?= number_format(150000, 0, ',', '.'); ?>,-</span></p>
                         <div class="rating">
                             <span class="fa fa-star text-warning"></span>
@@ -94,14 +105,14 @@
                         </div>
                     </div>
                     <div class="col-lg-3 text-right">
-                        <a href="/main/venue/" class="btn btn-primary">
+                        <a href="/main/venue/<?= $field['slug']; ?>" class="btn btn-primary">
                             <span class="text">Pilih Lapangan</span>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-    <?php endfor; ?>
+    <?php endforeach; ?>
 
 </section>
 

@@ -25,9 +25,11 @@ class ArenaModel extends Model
     return $this->db->query($query);
   }
 
+
+
   public function getArenaBySlug($slug)
   {
-    $query = "SELECT `a`.*,`s`.`sport_name`,`v`.`venue_name`,`v`.`logo`,`v`.`city`,`v`.`province`,`v`.`postal_code`,`v`.`address`,`vl`.`level_name`
+    $query = "SELECT `a`.*,`s`.`sport_name`,`v`.`slug` as `venue_slug`,`v`.`venue_name`,`v`.`logo`,`v`.`city`,`v`.`province`,`v`.`postal_code`,`v`.`address`,`vl`.`level_name`
     FROM `arena` AS `a`
     JOIN `sports` AS `s`
     ON `a`.`sport_id` = `s`.`id`
