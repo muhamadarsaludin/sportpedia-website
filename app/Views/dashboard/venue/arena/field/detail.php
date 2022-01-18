@@ -20,6 +20,11 @@
   <div class="col-12">
     <img class="banner-img w-100 rounded" src="/img/venue/arena/fields/main-images/<?= $field['field_image']; ?>">
   </div>
+  <?php foreach ($images as $image) : ?>
+    <div class="col-12">
+      <img class="banner-img w-100 rounded" src="/img/venue/arena/fields/other-images/<?= $image['image']; ?>">
+    </div>
+  <?php endforeach; ?>
 </div>
 <?= $this->endSection(); ?>
 <!-- End Banner -->
@@ -90,7 +95,7 @@
   <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
       <h6 class="m-0 font-weight-bold text-primary">Jadwal</h6>
-      <a href="" class="btn btn-primary btn-icon-split">
+      <a href="/venue/arena/field/schedule/main/add/<?= $field['slug']; ?>" class="btn btn-primary btn-icon-split">
         <span class="icon text-white-50">
           <i class="fas fa-plus-square"></i>
         </span>
@@ -105,7 +110,6 @@
               <th>No</th>
               <th>Hari</th>
               <th>Waktu</th>
-              <th>Harga</th>
               <th>Status</th>
               <th>Aksi</th>
             </tr>
@@ -115,30 +119,32 @@
               <th>No</th>
               <th>Hari</th>
               <th>Waktu</th>
-              <th>Harga</th>
               <th>Status</th>
               <th>Aksi</th>
             </tr>
           </tfoot>
           <tbody>
-            <?php for ($i = 1; $i <= 2; $i++) : ?>
-              <tr>
-                <td><?= $i; ?></td>
-                <td>Senin</td>
-                <td><?= '0' . (7 + $i) . ':00'; ?></td>
-                <td>Rp<?= number_format(150000, 0, ',', '.'); ?>,-</td>
-                <td>Aktif</td>
-                <td class="text-center">
-                  <a href="/venue/arena/field/detail/<?= $field['slug']; ?>" class="btn btn-info btn-sm"><i class="d-lg-none fa fa-pencil-alt"></i><span class="d-none d-lg-inline">Detail</span></a>
-                  <a href="/venue/arena/field/edit/<?= $field['slug']; ?>" class="btn btn-warning btn-sm"><i class="d-lg-none fa fa-pencil-alt"></i><span class="d-none d-lg-inline">Edit</span></a>
-                  <form action="/venue/arena/field/<?= $field['id']; ?>" method="POST" class="d-inline form-delete">
-                    <?= csrf_field(); ?>
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit" class="btn btn-danger btn-sm btn-delete"><span class="d-lg-none fa fa-trash"></span><span class="d-none d-lg-inline">Hapus</span></span></button>
-                  </form>
-                </td>
-              </tr>
-            <?php endfor; ?>
+
+            <?php $i = 1; ?>
+            <?php foreach ($schedules as $schedule) : ?>
+              <?php if ($schedule['served']) : ?>
+                <tr>
+                  <td><?= $i++; ?></td>
+                  <td><?= $schedule['day']; ?></td>
+                  <td><?= $schedule['start_time'] ?>-<?= $schedule['end_time']; ?></td>
+                  <td><?= $schedule['active'] == 1 ? 'Active' : 'Non Active'; ?></td>
+                  <td class="text-center">
+                    <a href="/venue/arena/field/schedule/main/detail/<?= $schedule['id']; ?>" class="btn btn-info btn-sm"><i class="d-lg-none fa fa-pencil-alt"></i><span class="d-none d-lg-inline">Detail</span></a>
+                    <a href="/venue/arena/field/schedule/main/edit/<?= $schedule['id']; ?>" class="btn btn-warning btn-sm"><i class="d-lg-none fa fa-pencil-alt"></i><span class="d-none d-lg-inline">Edit</span></a>
+                    <form action="/venue/arena/field/schedule/main/<?= $schedule['id']; ?>" method="POST" class="d-inline form-delete">
+                      <?= csrf_field(); ?>
+                      <input type="hidden" name="_method" value="DELETE">
+                      <button type="submit" class="btn btn-danger btn-sm btn-delete"><span class="d-lg-none fa fa-trash"></span><span class="d-none d-lg-inline">Hapus</span></span></button>
+                    </form>
+                  </td>
+                </tr>
+              <?php endif; ?>
+            <?php endforeach; ?>
           </tbody>
         </table>
       </div>

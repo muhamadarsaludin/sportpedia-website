@@ -10,7 +10,7 @@
       <h6 class="m-0 font-weight-bold text-primary">Tambah Lapangan <?= $arena['sport_name']; ?></h6>
     </div>
     <div class="card-body">
-      <form action="/venue/arena/field/save" method="post" class="user" enctype="multipart/form-data">
+      <form action="/venue/arena/field/main/save" method="post" class="user" enctype="multipart/form-data">
         <?= csrf_field(); ?>
         <!-- Image Arena -->
         <div class="form-group row">
@@ -63,7 +63,7 @@
             </div>
           </div>
         </div>
-
+        <!-- 
         <?php foreach ($specs as $spec) : ?>
           <div class="form-group row">
             <label for="spec-<?= $spec['id']; ?>" class="col-sm-2 col-form-label"><?= $spec['spec_name']; ?></label>
@@ -74,7 +74,7 @@
               </div>
             </div>
           </div>
-        <?php endforeach; ?>
+        <?php endforeach; ?> -->
 
 
 

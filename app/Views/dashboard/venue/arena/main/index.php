@@ -51,7 +51,7 @@
               <tr>
                 <td><?= $i++; ?></td>
                 <td><img src="/img/venue/arena/main-images/<?= $arena['arena_image']; ?>" alt="" class="w-100"></td>
-                <td><?= $arena['sport_id']; ?></td>
+                <td><?= $arena['sport_name']; ?></td>
                 <td><?= $arena['rating'] == null ? 'Belum Ada Penilaian' : $arena['rating']; ?></td>
                 <td><?= $arena['active'] == 1 ? 'Aktif' : 'Non Aktif'; ?></td>
                 <td class="text-center">

@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Controllers\Venue\Arena;
+namespace App\Controllers\Venue\Arena\Field;
 
 use App\Controllers\BaseController;
 
-use App\Models\FieldSpecificationsModel;
 use App\Models\SpecificationsModel;
 use App\Models\ArenaModel;
 use App\Models\ArenaImagesModel;
 use App\Models\ArenaFacilitiesModel;
 use App\Models\FieldsModel;
+use App\Models\FieldImagesModel;
+use App\Models\FieldSpecificationsModel;
 use App\Models\FacilitiesModel;
 use App\Models\SportsModel;
 use App\Models\VenueModel;
@@ -17,16 +18,20 @@ use App\Models\VenueLevelsModel;
 use App\Models\UsersModel;
 use App\Models\GroupsModel;
 use App\Models\GroupsUsersModel;
-use phpDocumentor\Reflection\Types\This;
+use App\Models\DayModel;
+use App\Models\ScheduleModel;
+use App\Models\ScheduleDetailModel;
 
-class Field extends BaseController
+
+class Main extends BaseController
 {
-  protected $fieldSpecificationsModel;
   protected $specificationsModel;
   protected $arenaModel;
   protected $arenaImagesModel;
   protected $arenaFacilitiesModel;
   protected $fieldsModel;
+  protected $fieldImagesModel;
+  protected $fieldSpecificationsModel;
   protected $facilitiesModel;
   protected $sportsModel;
   protected $venueModel;
@@ -34,16 +39,20 @@ class Field extends BaseController
   protected $usersModel;
   protected $groupsModel;
   protected $groupsUsersModel;
+  protected $dayModel;
+  protected $scheduleModel;
+  protected $scheduleDetailModel;
 
 
   public function __construct()
   {
-    $this->fieldspecificationsModel = new FieldSpecificationsModel();
     $this->specificationsModel = new SpecificationsModel();
     $this->arenaModel = new ArenaModel();
     $this->arenaImagesModel = new ArenaImagesModel();
     $this->arenaFacilitiesModel = new ArenaFacilitiesModel();
     $this->fieldsModel = new FieldsModel();
+    $this->fieldImagesModel = new FieldImagesModel();
+    $this->fieldspecificationsModel = new FieldSpecificationsModel();
     $this->facilitiesModel = new FacilitiesModel();
     $this->sportsModel = new SportsModel();
     $this->venueModel = new VenueModel();
@@ -51,6 +60,9 @@ class Field extends BaseController
     $this->usersModel = new UsersModel();
     $this->groupsModel = new GroupsModel();
     $this->groupsUsersModel = new GroupsUsersModel();
+    $this->dayModel = new DayModel();
+    $this->scheduleModel = new ScheduleModel();
+    $this->scheduleDetailModel = new ScheduleDetailModel();
     helper('text');
   }
 
@@ -78,9 +90,13 @@ class Field extends BaseController
         'errors' => [
           'ext_in' => "Extension must Image",
         ]
-      ]
+      ],
+      'image-1' => 'max_size[image-1,5024]|ext_in[image-1,png,jpg,jpeg]',
+      'image-2' => 'max_size[image-2,5024]|ext_in[image-2,png,jpg,jpeg]',
+      'image-3' => 'max_size[image-3,5024]|ext_in[image-3,png,jpg,jpeg]',
+      'image-4' => 'max_size[image-4,5024]|ext_in[image-4,png,jpg,jpeg]',
     ])) {
-      return redirect()->to('/venue/arena/field/add/' . $this->request->getVar('arena_slug'))->withInput()->with('errors', $this->validator->getErrors());
+      return redirect()->to('/venue/arena/field/main/add/' . $this->request->getVar('arena_slug'))->withInput()->with('errors', $this->validator->getErrors());
     }
 
     $image = $this->request->getFile('field_image');
@@ -97,6 +113,25 @@ class Field extends BaseController
       'description' => $this->request->getVar('description'),
     ]);
 
+    $field = $this->fieldsModel->getWhere(['slug' => $slug])->getRowArray();
+
+    $images = [];
+    for ($i = 1; $i <= 4; $i++) {
+      # code...
+      array_push($images, $this->request->getFile('image-' . $i));
+    }
+    foreach ($images as $image) {
+      if (!$image->getError() == 4) {
+        // pindahkan file
+        $imageName = $image->getRandomName();
+        $image->move('img/venue/arena/fields/other-images', $imageName);
+        $this->fieldImagesModel->save([
+          'field_id' => $field['id'],
+          'image' => $imageName
+        ]);
+      }
+    }
+
     session()->setFlashdata('message', 'Lapangan berhasil ditambahkan!');
     return redirect()->to('/venue/arena/main/detail/' .  $this->request->getVar('arena_slug'));
   }
@@ -107,8 +142,11 @@ class Field extends BaseController
     $data = [
       'title' => 'Detail Lapangan | Sportpedia',
       'field' => $this->fieldsModel->getWhere(['slug' => $slug])->getRowArray(),
+      'days'  => $this->dayModel->get()->getResultArray(),
     ];
-    // dd($data);
+    $data['images'] = $this->fieldImagesModel->getWhere(['field_id' => $data['field']['id']])->getResultArray();
+
+    $data['schedules'] = $this->scheduleModel->getScheduleByFieldId($data['field']['id'])->getResultArray();
     return view('dashboard/venue/arena/field/detail', $data);
   }
 }

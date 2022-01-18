@@ -53,7 +53,7 @@ class Main extends BaseController
     $data = [
       'title'  => 'Daftar Arena | Sportpedia',
       'active' => 'venue-arena',
-      'arenas'  => $this->arenaModel->getWhere(['venue_id' => venue()->id])->getResultArray(),
+      'arenas'  => $this->arenaModel->getArenaByVenueSlug(venue()->slug)->getResultArray(),
     ];
     // dd($data);
     return view('dashboard/venue/arena/main/index', $data);
