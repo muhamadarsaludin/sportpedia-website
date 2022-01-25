@@ -7,10 +7,10 @@
 <section class="py-2">
   <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-      <h6 class="m-0 font-weight-bold text-primary">Edit Banner Informasi</h6>
+      <h6 class="m-0 font-weight-bold text-primary">Edit Banner</h6>
     </div>
     <div class="card-body">
-      <form action="/admin/banners/update/<?= $banner['id']; ?>" method="post" class="user" enctype="multipart/form-data">
+      <form action="/venue/myvenue/banners/main/update/<?= $banner['id']; ?>" method="post" class="user" enctype="multipart/form-data">
         <?= csrf_field(); ?>
 
         <div class="form-group row">
@@ -49,7 +49,7 @@
           </div>
         </div>
         <div class="text-right" width="100%">
-          <a href="/admin/banners" class="btn btn-secondary btn-sm">Kembali</a>
+          <a href="/admin/sports" class="btn btn-secondary btn-sm">Kembali</a>
           <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
         </div>
       </form>

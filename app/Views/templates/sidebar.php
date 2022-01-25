@@ -78,7 +78,7 @@
   </li>
 
   <!-- Nav Item - Utilities Collapse Menu -->
-  <li class="nav-item">
+  <!-- <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseArena" aria-expanded="true" aria-controls="collapseArena">
       <i class="fas fa-fw fa-futbol"></i>
       <span>Data Arena</span>
@@ -89,9 +89,9 @@
         <a class="collapse-item" href="/admin/arena/main">Daftar Arena</a>
       </div>
     </div>
-  </li>
+  </li> -->
   <!-- Nav Item - Pesanana Collapse Menu -->
-  <li class="nav-item">
+  <!-- <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePesanan" aria-expanded="true" aria-controls="collapsePesanan">
       <i class="fas fa-fw fa-shopping-cart"></i>
       <span>Pesanan</span>
@@ -103,9 +103,9 @@
         <a class="collapse-item" href="utilities-color.html">Pembatalan</a>
       </div>
     </div>
-  </li>
+  </li> -->
   <!-- Nav Item - Keuangan Collapse Menu -->
-  <li class="nav-item">
+  <!-- <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKeuangan" aria-expanded="true" aria-controls="collapseKeuangan">
       <i class="fas fa-fw fa-dollar-sign"></i>
       <span>Keuangan</span>
@@ -117,14 +117,14 @@
         <a class="collapse-item" href="utilities-color.html">Rekening Bank</a>
       </div>
     </div>
-  </li>
+  </li> -->
 
   <!-- Nav Item - Tables -->
-  <li class="nav-item">
+  <!-- <li class="nav-item">
     <a class="nav-link" href="tables.html">
       <i class="fas fa-fw fa-percentage"></i>
       <span>Promosi</span></a>
-  </li>
+  </li> -->
 
   <!-- Divider -->
   <hr class="sidebar-divider">
@@ -142,11 +142,10 @@
     </a>
     <div id="collapseMyVendor" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">Menu Vendor Saya</h6>
-        <a class="collapse-item" href="#">Penilaian Vendor</a>
-        <a class="collapse-item" href="/venue/myvendor/profile">Profil Vendor</a>
-        <a class="collapse-item" href="/venue/myvendor/banner">Banner Vendor</a>
-        <a class="collapse-item" href="#">Upgrade Vendor</a>
+        <h6 class="collapse-header">Menu Venue Saya</h6>
+        <!-- <a class="collapse-item" href="/venue/myvenue/main/profile">Profile Venue</a> -->
+        <a class="collapse-item" href="/venue/myvenue/banners/main/index">Banner Venue</a>
+        <!-- <a class="collapse-item" href="#">Upgrade Venue</a> -->
       </div>
     </div>
   </li>
@@ -164,7 +163,7 @@
     </div>
   </li>
   <!-- Nav Item - Pesanana Collapse Menu -->
-  <li class="nav-item">
+  <!-- <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePesanan" aria-expanded="true" aria-controls="collapsePesanan">
       <i class="fas fa-fw fa-shopping-cart"></i>
       <span>Pesanan</span>
@@ -176,9 +175,9 @@
         <a class="collapse-item" href="utilities-color.html">Pembatalan</a>
       </div>
     </div>
-  </li>
+  </li> -->
   <!-- Nav Item - Keuangan Collapse Menu -->
-  <li class="nav-item">
+  <!-- <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKeuangan" aria-expanded="true" aria-controls="collapseKeuangan">
       <i class="fas fa-fw fa-dollar-sign"></i>
       <span>Keuangan</span>
@@ -190,23 +189,23 @@
         <a class="collapse-item" href="utilities-color.html">Rekening Bank</a>
       </div>
     </div>
-  </li>
+  </li> -->
 
 
 
   <!-- Nav Item - Tables -->
-  <li class="nav-item">
+  <!-- <li class="nav-item">
     <a class="nav-link" href="tables.html">
       <i class="fas fa-fw fa-percentage"></i>
       <span>Promosi</span></a>
-  </li>
+  </li> -->
 
   <!-- Nav Item - Charts -->
-  <li class="nav-item">
+  <!-- <li class="nav-item">
     <a class="nav-link" href="charts.html">
       <i class="fas fa-fw fa-cash-register"></i>
       <span>POS</span></a>
-  </li>
+  </li> -->
 
 
   <!-- Divider -->

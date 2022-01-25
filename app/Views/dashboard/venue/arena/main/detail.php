@@ -6,7 +6,7 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/">Home</a></li>
     <li class="breadcrumb-item"><a href=""><?= $arena['venue_name']; ?></a></li>
-    <li class="breadcrumb-item"><a href="">Arena <?= $arena['sport_name']; ?></a></li>
+    <li class="breadcrumb-item">Arena <?= $arena['sport_name']; ?></li>
   </ol>
 </nav>
 
@@ -55,7 +55,7 @@
           </div>
         </div>
         <div class="col-lg-3 text-right">
-          <a href="/main/venue/" class="btn btn-primary btn-icon-split">
+          <a href="" class="btn btn-primary btn-icon-split">
             <span class="icon text-white-50">
               <i class="fas fa-fw fa-door-open"></i>
             </span>

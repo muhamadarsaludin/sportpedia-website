@@ -4,7 +4,7 @@
 <nav aria-label="breadcrumb pt-4">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item"><a href=""><?= $venue['venue_name']; ?></a></li>
+        <li class="breadcrumb-item"><?= $venue['venue_name']; ?></li>
     </ol>
 </nav>
 
@@ -43,24 +43,47 @@
                         <span class="small">4.2 | 200 Penilaian</span>
                     </div>
                 </div>
-                <!-- <div class="col-lg-3 text-right">
-                    <a href="/main/venue/" class="btn btn-primary btn-icon-split">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-fw fa-door-open"></i>
-                        </span>
-                        <span class="text">Kunjungi Venue</span>
-                    </a>
-                </div> -->
             </div>
             <hr class="sidebar-divider">
-            <h6 class="text-pirmary font-weight-bold">Lorem, ipsum.</h6>
-
-
-            <div class="row align-items-center mt-4">
-
-            </div>
+            <h6 class="text-pirmary font-weight-bold">Deskripsi</h6>
+            <p><?= $venue['description']; ?></p>
         </div>
     </div>
+
+    <?php foreach ($arenas as $arena) : ?>
+        <!-- Show All Arena -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"><?= $arena['sport_name']; ?></h6>
+            </div>
+        </div>
+        <?php foreach ($fields as $field) : ?>
+            <?php if ($arena['id'] == $field['arena_id']) : ?>
+                <div class="row mb-4">
+                    <div class="col-12 col-lg-3">
+                        <a href="/main/field/<?= $field['slug']; ?>" class="clear-style">
+                            <div class="card shadow text-gray-600">
+                                <img class="card-img-top img-card-arena" src="/img/venue/arena/fields/main-images/<?= $field['field_image']; ?>">
+                                <div class="card-body">
+                                    <h6 class="m-0 font-weight-bold d-inline mr-2 text-gray-700"><?= $field['field_name']; ?></h6><span class="badge badge-primary"></span>
+                                    <p class="mt-1"><span class="text-xs">start from</span> <span class="card-price text-primary font-weight-bold text-lg">Rp<?= number_format(150000, 0, ',', '.'); ?>,-</span></p>
+                                    <div class="rating">
+                                        <span class="fa fa-star text-warning"></span>
+                                        <span class="fa fa-star text-warning"></span>
+                                        <span class="fa fa-star text-warning"></span>
+                                        <span class="fa fa-star text-warning"></span>
+                                        <span class="fa fa-star text-secondary"></span>
+                                        <span class="text-xs">4.2 | 200 Penilaian</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+
+    <?php endforeach; ?>
 
 </section>
 

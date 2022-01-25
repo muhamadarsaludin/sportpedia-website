@@ -11,7 +11,11 @@ use App\Models\ArenaModel;
 use App\Models\ArenaImagesModel;
 use App\Models\ArenaFacilitiesModel;
 use App\Models\FieldsModel;
+use App\Models\FieldImagesModel;
 use App\Models\FacilitiesModel;
+use App\Models\DayModel;
+use App\Models\ScheduleModel;
+use App\Models\ScheduleDetailModel;
 
 class Main extends BaseController
 {
@@ -24,7 +28,12 @@ class Main extends BaseController
   protected $arenaImagesModel;
   protected $arenaFacilitiesModel;
   protected $fieldsModel;
+  protected $fieldImagesModel;
   protected $facilitiesModel;
+  protected $dayModel;
+  protected $scheduleModel;
+  protected $scheduleDetailModel;
+
 
 
 
@@ -39,7 +48,11 @@ class Main extends BaseController
     $this->arenaImagesModel = new ArenaImagesModel();
     $this->arenaFacilitiesModel = new ArenaFacilitiesModel();
     $this->fieldsModel = new FieldsModel();
+    $this->fieldImagesModel = new FieldImagesModel();
     $this->facilitiesModel = new FacilitiesModel();
+    $this->dayModel = new DayModel();
+    $this->scheduleModel = new ScheduleModel();
+    $this->scheduleDetailModel = new ScheduleDetailModel();
   }
 
   public function index()
@@ -58,10 +71,12 @@ class Main extends BaseController
   public function venue($slug)
   {
     $data = [
-      'banners' => $this->bannersModel->getWhere(['venue_id' => null, 'active' => 1])->getResultArray(),
       'title' => 'Arena | Sportpedia',
       'venue' => $this->venueModel->getVenueBySlug($slug)->getRowArray(),
     ];
+    $data['arenas'] = $this->arenaModel->getArenaByVenueSlug($data['venue']['slug'])->getResultArray();
+    $data['fields'] = $this->fieldsModel->getFieldsByVenueId($data['venue']['id'])->getResultArray();
+    $data['banners'] = $this->bannersModel->getWhere(['venue_id' => $data['venue']['id'], 'active' => 1])->getResultArray();
     // dd($data);
     return view('public/venue', $data);
   }
@@ -85,8 +100,62 @@ class Main extends BaseController
   {
     $data = [
       'title' => 'Lapangan | Sportpedia',
-      'field' => $this->fieldsModel->getWhereSlug($slug)->getRowArray(),
+      'field' => $this->fieldsModel->getWhere(['slug' => $slug])->getRowArray(),
     ];
+    $data['images'] = $this->fieldImagesModel->getWhere(['field_id' => $data['field']['id']])->getResultArray();
+    $data['schedules'] = $this->scheduleModel->getScheduleByFieldId($data['field']['id'])->getResultArray();
+    $data['arena'] = $this->arenaModel->getArenaById($data['field']['arena_id'])->getRowArray();
+    $data['venue'] = $this->venueModel->getWhere(['id' => $data['arena']['venue_id']])->getRowArray();
+    $data['facilities'] = $this->facilitiesModel->getArenaFacilitiesByArenaId($data['arena']['id'])->getResultArray();
+    $data['dateChoose'] = false;
+
+    $dayname = date('D');
+    $date = $this->request->getVar('choose-date');
+    if ($date) {
+      $dayname = date('D', strtotime($date));
+      $data['dateChoose'] = $date;
+    }
+
+    switch ($dayname) {
+      case 'Sun':
+        $hari = "Minggu";
+        break;
+      case 'Mon':
+        $hari = "Senin";
+        break;
+      case 'Tue':
+        $hari = "Selasa";
+        break;
+      case 'Wed':
+        $hari = "Rabu";
+        break;
+      case 'Thu':
+        $hari = "Kamis";
+        break;
+      case 'Fri':
+        $hari = "Jumat";
+        break;
+      case 'Sat':
+        $hari = "Sabtu";
+        break;
+    }
+
+    $data['details'] = $this->scheduleDetailModel->getShceduleDetailByDayAndFieldId($hari, $data['field']['id'])->getResultArray();
+    // dd($data);
+
+    return view('public/field', $data);
+  }
+
+
+  public function schedule($id)
+  {
+    $data = [
+      'title' => 'Detail Jadwal | Sportpedia',
+      'schedule' => $this->scheduleModel->getWhere(['id' => $id])->getRowArray(),
+    ];
+    $data['details'] = $this->scheduleDetailModel->getWhere(['schedule_id' => $data['schedule']['id']])->getResultArray();
+
+    dd($data);
     return view('public/field', $data);
   }
 }

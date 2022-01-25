@@ -75,6 +75,7 @@ class Detail extends BaseController
       'detail' => $detailSchedule,
       'validation' => \Config\Services::validation(),
     ];
+    $data['schedule'] = $this->scheduleModel->getWhere(['id' => $data['detail']['schedule_id']])->getRowArray();
     // dd($data);
     return view('dashboard/venue/arena/field/schedule/detail/edit', $data);
   }

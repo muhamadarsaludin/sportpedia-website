@@ -125,9 +125,10 @@ class Main extends BaseController
 
     $data = [
       'title' => 'Detail Jadwal | Sportpedia',
-      'scedule' => $this->scheduleModel->getWhere(['id' => $scheduleId])->getRowArray(),
+      'schedule' => $this->scheduleModel->getWhere(['id' => $scheduleId])->getRowArray(),
       'details' => $this->scheduleDetailModel->getWhere(['schedule_id' => $scheduleId])->getResultArray(),
     ];
+    $data['field'] = $this->fieldsModel->getWhere(['id' => $data['schedule']['field_id']])->getRowArray();
     return view('dashboard/venue/arena/field/schedule/detail', $data);
   }
 }

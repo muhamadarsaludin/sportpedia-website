@@ -46,7 +46,7 @@
 
 
         <div class="text-right" width="100%">
-          <a href="/admin/facilities" class="btn btn-secondary btn-sm">Kembali</a>
+          <a href="/venue/arena/field/Main/detail/<?= $field['slug']; ?>" class="btn btn-secondary btn-sm">Kembali</a>
           <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
         </div>
       </form>

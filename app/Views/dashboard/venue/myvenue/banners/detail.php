@@ -5,9 +5,9 @@
 <section class="py-2">
   <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-      <h6 class="m-0 font-weight-bold text-primary">Detail Banner Informasi</h6>
+      <h6 class="m-0 font-weight-bold text-primary">Detail Banner</h6>
 
-      <a href="/admin/banners/edit/<?= $banner['id']; ?>" class="btn btn-primary btn-icon-split">
+      <a href="/venue/myvenue/banners/main/edit/<?= $banner['id']; ?>" class="btn btn-primary btn-icon-split">
         <span class="icon text-white-50">
           <i class="fas fa-pencil-alt"></i>
         </span>
@@ -42,10 +42,6 @@
           <div class="col-sm-10">
             <input type="text" class="form-control form-control-user" id="link" name="link" placeholder="" value="<?= (old('link')) ? old('link') : $banner['link']; ?>" readonly>
           </div>
-        </div>
-
-        <div class="text-right" width="100%">
-          <a href="/admin/banners" class="btn btn-secondary btn-sm">Kembali</a>
         </div>
 
       </form>

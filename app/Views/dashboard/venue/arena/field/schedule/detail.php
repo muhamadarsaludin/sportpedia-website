@@ -59,6 +59,9 @@
           </tbody>
         </table>
       </div>
+      <div class="text-right mt-4" width="100%">
+        <a href="/venue/arena/field/Main/detail/<?= $field['slug']; ?>" class="btn btn-secondary btn-sm">Kembali</a>
+      </div>
     </div>
   </div>
 
