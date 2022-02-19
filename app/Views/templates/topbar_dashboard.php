@@ -124,7 +124,7 @@
 
           <?php if (venue()) : ?>
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img class="img-profile rounded-circle mr-2" src="/img/venue/logos/<?= venue() ? venue()->logo : 'default.png'; ?>">
+              <img class="img-profile rounded-circle mr-2" src="/img/venue/logos/<?= venue()->logo ? venue()->logo : 'default.png'; ?>">
               <span class="d-none d-lg-inline text-gray-600 small"><?= venue() ? venue()->venue_name : 'Nama Venue Belum diatur'; ?></span>
             </a>
           <?php else : ?>

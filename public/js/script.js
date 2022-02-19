@@ -1,4 +1,3 @@
-
 // Hide & unhide password
 let visible = document.querySelectorAll(".visible");
 console.log(visible);

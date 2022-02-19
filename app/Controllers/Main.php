@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UsersModel;
+use App\Models\GroupsUsersModel;
 use App\Models\BannersModel;
 use App\Models\SportsModel;
 use App\Models\VenueModel;
@@ -19,7 +20,10 @@ use App\Models\ScheduleDetailModel;
 
 class Main extends BaseController
 {
+
+
   protected $usersModel;
+  protected $groupsUsersModel;
   protected $bannersModel;
   protected $sportsModel;
   protected $venueModel;
@@ -40,6 +44,7 @@ class Main extends BaseController
   public function __construct()
   {
     $this->usersModel = new UsersModel();
+    $this->groupsUsersModel = new GroupsUsersModel();
     $this->bannersModel = new BannersModel();
     $this->sportsModel = new SportsModel();
     $this->venueModel = new VenueModel();
@@ -63,7 +68,6 @@ class Main extends BaseController
       'sports' => $this->sportsModel->getAllSportAvailable()->getResultArray(),
       'arenas' => $this->arenaModel->getAllArena()->getResultArray(),
     ];
-    // dd(my_info());
     return view('public/index', $data);
   }
 
@@ -143,6 +147,8 @@ class Main extends BaseController
     $data['details'] = $this->scheduleDetailModel->getShceduleDetailByDayAndFieldId($hari, $data['field']['id'])->getResultArray();
     // dd($data);
 
+
+
     return view('public/field', $data);
   }
 
@@ -157,5 +163,62 @@ class Main extends BaseController
 
     dd($data);
     return view('public/field', $data);
+  }
+
+
+
+
+  public function venueregister()
+  {
+    $data = [
+      'title' => 'Registrasi Venue'
+    ];
+    return view('auth/venue_register', $data);
+  }
+
+  public function sendvenueregistration()
+  {
+    if (!$this->validate([
+      'venue_name' => 'required|is_unique[venue.venue_name]',
+      'description' => 'required',
+      'city' => 'required',
+      'province' => 'required',
+      'address' => 'required',
+      'postal_code' => 'required',
+      'postal_code' => 'required',
+    ])) {
+      return redirect()->to('/main/venueregister')->withInput()->with('errors', $this->validator->getErrors());;
+    }
+
+    $venue = $this->venueModel->getWhere(['user_id' => user_id()])->getRowArray();
+    // dd($venue);
+    if ($venue) {
+      session()->setFlashdata('message', 'Kamu sudah memiliki venue');
+      return redirect()->to('/dashboard');
+    }
+    $venueName = $this->request->getVar('venue_name');
+    $slug = strtolower($venueName . '-' . random_string('numeric', 4));
+
+    $this->venueModel->save([
+      'user_id' => user()->id,
+      'venue_name' => $venueName,
+      'slug' => $slug,
+      'description' => $this->request->getVar('description'),
+      'city' => $this->request->getVar('city'),
+      'province' => $this->request->getVar('province'),
+      'postal_code' => $this->request->getVar('postal_code'),
+      'address' => $this->request->getVar('address'),
+    ]);
+
+    $group = $this->groupsUsersModel->getWhere(['user_id' => user_id()])->getRowArray();
+
+    $this->groupsUsersModel->save([
+      'id' => $group['id'],
+      'group_id' => 2
+    ]);
+
+
+    session()->setFlashdata('message', 'Venue berhasil dibuat');
+    return redirect()->to('/dashboard');
   }
 }

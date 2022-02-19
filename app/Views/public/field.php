@@ -28,6 +28,11 @@
 
 <?= $this->section('content'); ?>
 
+<form id="payment-form" method="post" action="<?= base_url('transaction/finish'); ?>">
+  <input type="text" name="result_type" id="result-type" value=""></div>
+  <input type="text" name="result_data" id="result-data" value=""></div>
+</form>
+
 <section class="my-5">
 
   <div class="card shadow mb-4">
@@ -121,7 +126,7 @@
         <div class="row">
           <?php foreach ($details as $detail) : ?>
             <div class="col-3 mb-4">
-              <button class="btn btn-primary w-100 py-4">
+              <button class="btn btn-light w-100 py-4 btn-detail-scedule" data-id="<?= $detail['id']; ?>">
                 <span class="">(<?= date_format(date_create($detail['start_time']), 'H:i'); ?> - <?= date_format(date_create($detail['end_time']), 'H:i'); ?>)</span>
                 <span> Rp<?= number_format($detail['price'], 0, ',', '.'); ?>,-</span>
               </button>
@@ -144,17 +149,14 @@
                     <th>Harga</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>09:00 - 10:00</td>
-                    <td>Rp100.000,-</td>
-                  </tr>
+                <tbody class="list-order">
+
                 </tbody>
               </table>
             </div>
-            <h6 class="mb-4 font-weight-bold">Total : <span class="text-lg text-primary">Rp100.000,-</span> </h6>
-            <button class="btn btn-primary w-100">Bayar</button>
+            <h6 class="mb-4 font-weight-bold">Total : <span class="text-lg text-primary total-pay"></span></h6>
+            <button class="btn btn-primary w-100" id="btn-pay">Bayar</button>
+            <button class="btn btn-primary w-100 mt-4" id="btn-snap" data-snaptoken="">snap</button>
           </div>
         </div>
       </div>
@@ -175,14 +177,113 @@
     $('#dataTable').DataTable();
   });
 
-
-
-
   $('.banner-container').slick({
     slidesToShow: 1,
     dots: true,
     autoplay: true,
     infinite: true,
+  });
+
+
+  let details = document.querySelectorAll(".btn-detail-scedule");
+  let cart = [];
+  console.log(details);
+  details.forEach((e) => {
+    e.addEventListener("click", () => {
+      e.classList.toggle("btn-light");
+      e.classList.toggle("btn-primary");
+      if (cart.includes($(e).data('id'))) {
+        cart.pop($(e).data('id'))
+      } else {
+        cart.push($(e).data('id'))
+      }
+      updateCartOrder();
+    })
+  })
+
+  function updateCartOrder() {
+    $.ajax({
+      url: "/transaction/update",
+      type: "post",
+      data: {
+        listOrder: cart
+      },
+      success: function(data) {
+        let orders = JSON.parse(data);
+        let html = "";
+        let i = 1;
+        let totalPay = 0;
+        if (orders.length > 0) {
+          console.log(orders);
+          orders.forEach((order) => {
+            totalPay = totalPay + parseInt(order.price);
+            html += `
+          <tr>
+            <td>${i++}</td>
+            <td>${order.start_time}-${order.end_time}</td>
+            <td>${new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(order.price)}</td>
+          </tr>
+          `;
+          })
+        }
+        $(".list-order").html(html);
+        $(".total-pay").html(new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR"
+        }).format(totalPay));
+      }
+    });
+  }
+
+
+  const btnPay = document.getElementById("btn-pay");
+
+  btnPay.addEventListener("click", () => {
+    let bookingDate = document.getElementById("choose-date").value;
+    $.ajax({
+      url: "/transaction/order",
+      type: "post",
+      data: {
+        listOrder: cart,
+        bookingDate: bookingDate
+      },
+      success: function(data) {
+        console.log(data);
+        $("#btn-snap").data("snaptoken", data);
+        // $("#btn-snap").click();
+      }
+    })
+  });
+
+
+  function changeResult(type, data) {
+    $("#result-type").val(type);
+    $("#result-data").val(data);
+  }
+
+  $("#btn-snap").click(() => {
+    let snapToken = $("#btn-snap").data('snaptoken')
+    // snap Logic
+    snap.pay(snapToken, {
+      // Optional
+      onSuccess: function(result) {
+        console.log(result);
+        changeResult('success', result);
+        $("#payment-form").submit();
+      },
+      onPending: function(result) {
+        console.log(result);
+        changeResult('pending', result);
+        $("#payment-form").submit();
+      },
+      onError: function(result) {
+        console.log(result);
+        changeResult('error', result);
+        $("#payment-form").submit();
+      }
+
+    });
+
   });
 </script>
 <?= $this->endSection(); ?>

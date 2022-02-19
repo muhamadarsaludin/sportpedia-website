@@ -24,5 +24,7 @@
 <script src="<?= base_url('js/jquery.dataTables.min.js'); ?>"></script>
 <!-- DATATABLE -->
 <script src="<?= base_url('js/dataTables.bootstrap4.min.js'); ?>"></script>
+<!-- Midtrans -->
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-QD_c2mAionu-LIuk"></script>
 <!-- ====================MAIN SCRIPT====================== -->
 <script src="<?= base_url('js/script.js'); ?>"></script>

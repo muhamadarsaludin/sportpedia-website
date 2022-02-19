@@ -2,8 +2,10 @@
 
 namespace App\Controllers;
 
+
 class Auth extends \Myth\Auth\Controllers\AuthController
 {
+
   public function login()
   {
     // No need to show a login form if the user
