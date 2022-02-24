@@ -13,7 +13,7 @@ class TransactionDetailModel extends Model
 
   public function getTransactionDetailByTransactionCode($code)
   {
-    $query = "SELECT `td`.*,`t`.`transaction_code`,`sd`.`start_time`,`sd`.`end_time`,`f`.`slug`,`f`.`field_name`,`f`.`field_image`
+    $query = "SELECT `td`.*,`t`.`transaction_code`,`sd`.`start_time`,`sd`.`end_time`,`f`.`slug`,`f`.`field_name`,`f`.`field_image`,`v`.`venue_name`
         FROM `transaction_detail` AS `td`
         JOIN `transaction` AS `t`
         ON `td`.`transaction_id` = `t`.`id`
@@ -23,6 +23,10 @@ class TransactionDetailModel extends Model
         ON `sd`.`schedule_id` = `s`.`id`
         JOIN `fields` AS `f`
         ON `s`.`field_id` = `f`.`id`
+        JOIN `arena` AS `a`
+        ON `f`.`arena_id` = `a`.`id`
+        JOIN `venue` AS `v`
+        ON `a`.`venue_id` = `v`.`id`
         WHERE `t`.`transaction_code` = '$code'
     ";
     return $this->db->query($query);

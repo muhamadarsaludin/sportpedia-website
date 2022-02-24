@@ -221,4 +221,10 @@ class Main extends BaseController
     session()->setFlashdata('message', 'Venue berhasil dibuat');
     return redirect()->to('/dashboard');
   }
+
+
+  public function trans()
+  {
+    return 'ok';
+  }
 }

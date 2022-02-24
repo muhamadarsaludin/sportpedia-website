@@ -48,8 +48,6 @@ class Transaction extends BaseController
   protected $transactionDetailModel;
 
 
-
-
   public function __construct()
   {
     $this->usersModel = new UsersModel();
@@ -72,7 +70,6 @@ class Transaction extends BaseController
     helper('text');
   }
 
-
   public function index()
   {
     $data = [
@@ -83,14 +80,14 @@ class Transaction extends BaseController
   }
 
 
-  public function detail($code)
+  public function detail($transCode)
   {
+
     $data = [
       'title'  => 'Detail Transaksi | Sportpedia',
-      'transaction' => $this->transactionModel->getWhere(['transaction_code' => $code])->getRowArray(),
+      'transaction' => $this->transactionModel->getWhere(['transaction_code' => $transCode])->getRowArray(),
+      'details' => $this->transactionDetailModel->getTransactionDetailByTransactionCode($transCode)->getResultArray()
     ];
-    $data['details'] = $this->transactionDetailModel->getTransactionDetailByTransactionCode($code)->getResultArray();
-    dd($data);
     return view('transaction/detail', $data);
   }
 
@@ -155,7 +152,14 @@ class Transaction extends BaseController
         'gross_amount' => $totalPay,
       )
     );
+
     $snapToken = \Midtrans\Snap::getSnapToken($params);
+
+    $this->transactionModel->save([
+      'id' => $trans['id'],
+      'snap_token' => $snapToken,
+      'total_pay' => $totalPay
+    ]);
     return $snapToken;
   }
 
@@ -163,25 +167,5 @@ class Transaction extends BaseController
 
   public function finish()
   {
-    $result = json_decode($this->request->getPost('result_data'), true);
-    dd($result);
-    // $data = [
-    //   'order_id' => $result['order_id'],
-    //   'gross_amount' => $result['gross_amount'],
-    //   'payment_type' => $result['payment_type'],
-    //   'transaction_time' => $result['transaction_time'],
-    //   'bank' => $result['va_numbers'][0]['bank'],
-    //   'va_number' => $result['va_numbers'][0]['va_number'],
-    //   'pdf_url' => $result['pdf_url'],
-    //   'status_code' => $result['status_code'],
-    // ];
-    // $simpan = $this->paymentModel->save($data);
-    // if ($simpan) {
-    //   session()->setFlashdata('message', 'Transaction has been successfully added, please make payment');
-    //   return redirect()->to('/transaction/history');
-    // } else {
-    //   session()->setFlashdata('message', 'Transaction filed');
-    //   return redirect()->to('/transaction/history');
-    // }
   }
 }

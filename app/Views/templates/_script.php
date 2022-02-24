@@ -1,5 +1,7 @@
 <!-- JQUERY -->
 <script src="<?= base_url('js/jquery.min.js'); ?>"></script>
+<!-- JQUERY Redirect-->
+<script src="<?= base_url('js/jquery.redirect.js'); ?>"></script>
 <!-- Bootstrap -->
 <script src="<?= base_url('js/bootstrap.bundle.min.js'); ?>"></script>
 <!-- JQUERY Easing -->

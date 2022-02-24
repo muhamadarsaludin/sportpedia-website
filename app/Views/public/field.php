@@ -29,12 +29,12 @@
 <?= $this->section('content'); ?>
 
 <form id="payment-form" method="post" action="<?= base_url('transaction/finish'); ?>">
-  <input type="text" name="result_type" id="result-type" value=""></div>
-  <input type="text" name="result_data" id="result-data" value=""></div>
+  <input type="hidden" name="result_type" id="result-type" value="">
+  <input type="hidden" name="result_data" id="result-data" value="">
 </form>
 
-<section class="my-5">
 
+<section class="my-5">
   <div class="card shadow mb-4">
     <div class="card-body">
       <div class="row align-items-center justify-content-between">
@@ -156,7 +156,6 @@
             </div>
             <h6 class="mb-4 font-weight-bold">Total : <span class="text-lg text-primary total-pay"></span></h6>
             <button class="btn btn-primary w-100" id="btn-pay">Bayar</button>
-            <button class="btn btn-primary w-100 mt-4" id="btn-snap" data-snaptoken="">snap</button>
           </div>
         </div>
       </div>
@@ -237,9 +236,9 @@
 
 
   const btnPay = document.getElementById("btn-pay");
-
   btnPay.addEventListener("click", () => {
     let bookingDate = document.getElementById("choose-date").value;
+    console.log(cart);
     $.ajax({
       url: "/transaction/order",
       type: "post",
@@ -247,43 +246,29 @@
         listOrder: cart,
         bookingDate: bookingDate
       },
-      success: function(data) {
-        console.log(data);
-        $("#btn-snap").data("snaptoken", data);
-        // $("#btn-snap").click();
+      success: function(snapToken) {
+        console.log(snapToken);
+
+        snap.pay(snapToken, {
+          // Optional
+          onSuccess: function(result) {
+            console.log(result);
+            let info = JSON.stringify(result);
+            $.redirect(`/transaction/detail/${result.order_id}`, info, "POST", "");
+          },
+          onPending: function(result) {
+            console.log(result);
+            let info = JSON.stringify(result);
+            $.redirect(`/transaction/detail/${result.order_id}`, info, "POST", "");
+          },
+          onError: function(result) {
+            console.log(result);
+            let info = JSON.stringify(result);
+            $.redirect(`/transaction/detail/${result.order_id}`, info, "POST", "");
+          }
+        });
       }
     })
-  });
-
-
-  function changeResult(type, data) {
-    $("#result-type").val(type);
-    $("#result-data").val(data);
-  }
-
-  $("#btn-snap").click(() => {
-    let snapToken = $("#btn-snap").data('snaptoken')
-    // snap Logic
-    snap.pay(snapToken, {
-      // Optional
-      onSuccess: function(result) {
-        console.log(result);
-        changeResult('success', result);
-        $("#payment-form").submit();
-      },
-      onPending: function(result) {
-        console.log(result);
-        changeResult('pending', result);
-        $("#payment-form").submit();
-      },
-      onError: function(result) {
-        console.log(result);
-        changeResult('error', result);
-        $("#payment-form").submit();
-      }
-
-    });
-
   });
 </script>
 <?= $this->endSection(); ?>
